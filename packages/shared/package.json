@@ -1,0 +1,12 @@
+{
+  "name": "@wekit/shared",
+  "version": "0.0.0",
+  "description": "wekit shared lib",
+  "main": "./dist/wekit-shared.cjs.js",
+  "module": "./dist/wekit-shared.esm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WumaCoder",
+  "license": "MIT"
+}
