@@ -42,6 +42,22 @@ importers:
     dependencies:
       '@wekit/shared': link:../shared
 
+  packages/play:
+    specifiers:
+      '@wekit/core': workspace:^0.0.0
+      '@wekit/shared': workspace:^0.0.0
+    dependencies:
+      '@wekit/core': link:../core
+      '@wekit/shared': link:../shared
+
+  packages/plugin-console:
+    specifiers:
+      '@wekit/core': workspace:^0.0.0
+      '@wekit/shared': workspace:^0.0.0
+    dependencies:
+      '@wekit/core': link:../core
+      '@wekit/shared': link:../shared
+
   packages/shared:
     specifiers: {}
 
