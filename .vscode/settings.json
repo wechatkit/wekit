@@ -1,3 +1,4 @@
 {
-  "commentTranslate.source": "Kaiqun.tencent-cloud-translate-tencentCloud"
+  "commentTranslate.source": "Kaiqun.tencent-cloud-translate-tencentCloud",
+  "jest.jestCommandLine": "npm run test --"
 }

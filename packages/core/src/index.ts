@@ -1,1 +1,4 @@
-export let a = 1;
+export * from "./createApp";
+export * from "./defPage";
+export * from "./defComponent";
+export * from "./Plugin";

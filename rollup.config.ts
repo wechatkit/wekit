@@ -20,16 +20,22 @@ export default defineConfig({
     {
       file: `${packBase}/dist/wekit-${packName}.cjs.js`,
       format: "cjs",
+      sourcemap: true,
     },
     {
       file: `${packBase}/dist/wekit-${packName}.esm.js`,
       format: "esm",
+      sourcemap: true,
     },
   ],
   plugins: [
     swc(
       defineRollupSwcOption({
         tsconfig: "tsconfig.json",
+        sourceMaps: true,
+        jsc: {
+          externalHelpers: true,
+        },
       })
     ),
   ],
