@@ -1,0 +1,22 @@
+{
+  "name": "@wekit/plugin-console",
+  "version": "1.0.0",
+  "description": "wekit plugin console",
+  "main": "./dist/wekit-plugin-console.cjs.js",
+  "module": "./dist/wekit-plugin-console.esm.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wekit",
+    "plugin",
+    "wekit-plugin"
+  ],
+  "author": "wmc",
+  "license": "ISC",
+  "dependencies": {
+    "@wekit/core": "workspace:^0.0.0",
+    "@wekit/shared": "workspace:^0.0.0"
+  }
+}
