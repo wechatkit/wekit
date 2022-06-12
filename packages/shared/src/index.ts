@@ -4,6 +4,6 @@ export * from "./injectHook";
 export * from "./Log";
 export * from "./type-tools";
 export * from "./Emitter";
-export * from "./injectPreloadEvent";
 export * from "./setTargetValue";
 export * from "./deepClone";
+export * from "./queryParse";

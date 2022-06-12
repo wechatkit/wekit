@@ -1,8 +1,9 @@
 import { Wekit } from "./core/Wekit";
-import { callPreload, injectHookBefore } from "@wekit/shared";
+import { injectHookBefore } from "@wekit/shared";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
 import { injectPropProxy } from "./helper/injectPropProxy";
 import { injectWk, WkType } from "./helper/injectWk";
+import { callPreload } from "./helper/injectPreloadEvent";
 
 export type DefPageOptions<TData, TCustom> = WechatMiniprogram.Page.Options<
   TData,
@@ -57,7 +58,9 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     ctx.data = null;
   });
 
-  wekit.pageEventEmitter.bindListener(options);
+  // wekit.pageEventEmitter.bindListener(options);
+
+  Page(options);
 
   return options;
 }

@@ -1,4 +1,3 @@
-import { Emitter } from "@wekit/shared";
 import { Wekit } from "./core/Wekit";
 import { Plugin } from "./Plugin";
 
@@ -13,8 +12,6 @@ export class PluginManager {
       this.pluginStore.add(item);
     });
   }
-
-  trigger() {}
 
   destroy() {
     this.pluginStore.forEach((item) => item.uninstall());

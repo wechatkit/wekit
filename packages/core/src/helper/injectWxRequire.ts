@@ -1,3 +1,6 @@
+import { Log } from "@wekit/shared";
+import { Wekit } from "../core/Wekit";
+
 export function calcRelativePath(currentPath = "", relativePath = "") {
   if (relativePath.startsWith("/")) {
     return relativePath;
@@ -28,5 +31,10 @@ export function getCurrentPage() {
 
 export function wxRequire(path: string, callback: (module: any) => void) {
   path = calcRelativePath(getCurrentPage().is, path);
-  (require as any)(path, callback);
+  try {
+    Log.info(path, "onPreload before");
+    Wekit.globalWekit.require(path, callback);
+  } catch (error) {
+    Log.warn(path, "onPreload before", error);
+  }
 }

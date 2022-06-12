@@ -1,16 +1,17 @@
 import { deepClone } from "@wekit/shared";
 
 export enum WkType {
-  APP,
   PAGE,
   COMPONENT,
 }
 
 export function injectWk(options: any, type: WkType) {
+  const dataBackup =
+    typeof options.data === "function" ? deepClone(options.data) : options.data;
   const dataFactory =
     typeof options.data === "function"
       ? options.data
-      : () => deepClone(options.data);
+      : () => deepClone(dataBackup);
 
   const wk = {
     meta: {
@@ -27,7 +28,9 @@ export function injectWk(options: any, type: WkType) {
   };
 
   Object.defineProperty(options, "__wk__", {
-    value: wk,
+    value: function wkFactory() {
+      return wk;
+    },
     enumerable: true,
     configurable: false,
     writable: true,

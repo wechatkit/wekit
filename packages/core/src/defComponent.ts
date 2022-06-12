@@ -66,5 +66,8 @@ export function defComponent<
   });
 
   wekit.pageEventEmitter.bindListener(options);
+
+  Component(options);
+
   return options;
 }
