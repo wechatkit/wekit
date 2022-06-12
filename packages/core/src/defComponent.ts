@@ -41,6 +41,8 @@ export function defComponent<
 
   const _setData = injectSetDataHelper(options);
 
+  wekit.pageEventEmitter.emit("onInit", wk);
+
   injectHookBefore<any>(options.lifetimes, "attached", function (ctx: any) {
     injectPropProxy(ctx, options);
     ctx.data = options.data;

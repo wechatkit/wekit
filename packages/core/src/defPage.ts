@@ -26,6 +26,8 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const _setData = injectSetDataHelper(options);
 
+  wekit.pageEventEmitter.emit("onInit", wk);
+
   injectHookBefore(options, "onPreload", function () {
     if (!wk.meta.isInitData)
       options.data = wk.meta.dataFactory.call(options) as any;
@@ -58,7 +60,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     ctx.data = null;
   });
 
-  // wekit.pageEventEmitter.bindListener(options);
+  wekit.pageEventEmitter.bindListener(options);
 
   Page(options);
 
