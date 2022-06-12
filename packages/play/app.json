@@ -1,7 +1,25 @@
 {
+  "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/hello/hello"
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "logs"
+      ]
+    }
+  },
+  "subPackages": [
+    {
+      "name": "logs",
+      "root": "pages/logs",
+      "pages": [
+        "logs"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "light",

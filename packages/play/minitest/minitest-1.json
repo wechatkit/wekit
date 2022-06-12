@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "caseId": "91adcdd5-b4c0-45ed-a335-8e1c30c73e34",
+    "caseName": "minitest-1",
+    "remarks": "",
+    "version": "0.0.1",
+    "startTime": 1655041637397,
+    "endTime": 1655041661650,
+    "appid": "wx1952a7abc5673274"
+  },
+  "env": {
+    "wxapplibVersion": "2.24.4",
+    "openid": "o6zAJs5N-XZMhIXMJkz_4evLHsSg",
+    "entry": {
+      "path": "pages/index/index",
+      "query": "",
+      "scene": 1001
+    },
+    "mock": [
+      "request"
+    ],
+    "maxWaitFor": 10000,
+    "ignoreSelectors": [],
+    "mockAPIs": [],
+    "cleanCache": [
+      "none"
+    ],
+    "groupTouch": true,
+    "recordAPIs": []
+  },
+  "commands": [
+    {
+      "layer": "tool",
+      "commandType": "operate",
+      "command": "startRecord",
+      "waitfor": 0,
+      "timeStamp": 1655041637397,
+      "desc": ""
+    },
+    {
+      "tagName": "button",
+      "command": "tap",
+      "target": "/view/button",
+      "value": null,
+      "path": "pages/index/index",
+      "text": "打开hello页",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 155.375,
+            "clientY": 407.171875,
+            "pageX": 155.375,
+            "pageY": 407.171875,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 1308.375,
+            "screenY": 698.2890625
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [
+        "/view/button"
+      ],
+      "timeStamp": 2077,
+      "waitfor": 2077,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "timeStamp": 4251,
+      "waitfor": 2174,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "native",
+      "command": "navigateLeft",
+      "text": ""
+    },
+    {
+      "tagName": "open-data",
+      "command": "tap",
+      "target": "/view/view[1]/view/open-data",
+      "value": null,
+      "path": "pages/index/index",
+      "text": "",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 166.65625,
+            "clientY": 126.9453125,
+            "pageX": 166.65625,
+            "pageY": 126.9453125,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 1319.65625,
+            "screenY": 417.9453125
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [
+        "/view/view[1]/view/open-data"
+      ],
+      "timeStamp": 5261,
+      "waitfor": 1010,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "timeStamp": 8059,
+      "waitfor": 2798,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "native",
+      "command": "navigateLeft",
+      "text": ""
+    },
+    {
+      "timeStamp": 24253,
+      "waitfor": 10000,
+      "desc": "",
+      "layer": "tool",
+      "commandType": "operate",
+      "command": "stopRecord"
+    }
+  ]
+}

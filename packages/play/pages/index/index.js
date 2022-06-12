@@ -2,22 +2,31 @@
 // 获取应用实例
 const app = getApp()
 
-Page({
-  data: {
+module.exports = wx.defPage({
+  data: ()=>({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
-  },
+  }),
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
+  
+  toHelloPage(e){
+    console.log(e);
+    wx.navigateTo({
+      url: '/pages/hello/hello'
+    })
+  },
+
   onLoad() {
+    console.log('onLoad');
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true

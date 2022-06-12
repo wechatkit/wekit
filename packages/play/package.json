@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "play",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wekit/core": "workspace:^0.0.0",
+    "@wekit/plugin-console": "workspace:^1.0.0",
+    "@wekit/shared": "workspace:^0.0.0"
+  }
+}
