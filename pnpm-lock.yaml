@@ -45,9 +45,11 @@ importers:
   packages/play:
     specifiers:
       '@wekit/core': workspace:^0.0.0
+      '@wekit/plugin-console': workspace:^1.0.0
       '@wekit/shared': workspace:^0.0.0
     dependencies:
       '@wekit/core': link:../core
+      '@wekit/plugin-console': link:../plugin-console
       '@wekit/shared': link:../shared
 
   packages/plugin-console:
