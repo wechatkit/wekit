@@ -1,6 +1,6 @@
 {
   "name": "@wekit/shared",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "wekit shared lib",
   "main": "./dist/wekit-shared.cjs.js",
   "module": "./dist/wekit-shared.esm.js",
