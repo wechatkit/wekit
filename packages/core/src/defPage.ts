@@ -26,7 +26,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const _setData = injectSetDataHelper(options);
 
-  wekit.pageEventEmitter.emit("onInit", wk);
+  wekit.pageEventEmitter.emit("onInit", options);
 
   injectHookBefore(options, "onPreload", function() {
     if (!wk.meta.isInitData)
