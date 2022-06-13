@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.23.0",
     "@jest/globals": "^28.1.1",
     "@swc/core": "^1.2.149",
     "@swc/helpers": "^0.3.6",
