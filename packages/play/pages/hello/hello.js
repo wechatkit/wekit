@@ -1,6 +1,8 @@
+const { defPage } = require("@wekit/core")
+
 // pages/hello/hello.js
 let lock = false
-module.exports = wx.defPage({
+module.exports = defPage({
 
   /**
    * 页面的初始数据
@@ -10,7 +12,6 @@ module.exports = wx.defPage({
   }),
 
   onPreload(){
-
     console.log('onPreload', Date.now())
   },
   /**

@@ -1,8 +1,11 @@
 // index.js
+
+const { defPage } = require("@wekit/core");
+
 // 获取应用实例
 const app = getApp()
 
-module.exports = wx.defPage({
+module.exports = defPage({
   data: ()=>({
     motto: 'Hello World',
     userInfo: {},

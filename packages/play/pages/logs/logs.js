@@ -1,7 +1,8 @@
 // logs.js
+const { defPage } = require('@wekit/core');
 const util = require('../../utils/util.js')
 
-module.exports = wx.defPage({
+module.exports = defPage({
   data: {
     logs: []
   },
