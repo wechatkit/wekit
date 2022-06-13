@@ -28,6 +28,10 @@ module.exports = defPage({
     })
   },
 
+  onPreload(){
+    console.log('启动页的onPreload', this)
+  },
+
   onLoad() {
     console.log('onLoad');
     if (wx.getUserProfile) {
