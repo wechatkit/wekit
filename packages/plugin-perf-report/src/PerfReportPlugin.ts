@@ -1,6 +1,6 @@
 import { Plugin, Wekit } from "@wekit/core";
 
-const LOG_PREFIX = "[perf-report]:";
+const LOG_PREFIX = "[perf-report]";
 type PerfReportPluginOptions = {
   onReport?: (pagePerfReport: AnyObject) => void; // 上报页面性能数据
 };
@@ -46,8 +46,7 @@ export class PerfReportPlugin implements Plugin {
       );
     });
 
-    ctx.pageEventEmitter.on("flushView", ({ wk }: any) => {
-      const page = wk.meta.instance;
+    ctx.pageEventEmitter.on("flushView", (page: any) => {
       updatePagePerfReport(page);
       console.log(
         LOG_PREFIX,
