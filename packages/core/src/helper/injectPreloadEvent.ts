@@ -1,12 +1,13 @@
 import { injectHookBefore } from "@wekit/shared";
 import { Log } from "@wekit/shared";
 import { queryParse } from "@wekit/shared";
-import { wxRequire } from "./injectWxRequire";
+import { Wekit } from "../core/Wekit";
 
 export function injectPreloadEvent(type: any) {
+  const wekit = Wekit.globalWekit;
   injectHookBefore(wx, type, function (_, opts) {
     let [path, query] = opts.url.split("?");
-    wxRequire(path, (ctx) => {
+    wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
         ctx.options = queryParse(query);
         ctx.route = path.substring(1);

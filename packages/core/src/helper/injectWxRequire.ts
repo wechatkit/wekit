@@ -28,13 +28,3 @@ export function getCurrentPage() {
   const pages = getCurrentPages();
   return pages[pages.length - 1];
 }
-
-export function wxRequire(path: string, callback: (module: any) => void) {
-  path = calcRelativePath(getCurrentPage().is, path);
-  try {
-    Log.info(path, "onPreload before");
-    Wekit.globalWekit.require(path, callback);
-  } catch (error) {
-    Log.warn(path, "onPreload before", error);
-  }
-}

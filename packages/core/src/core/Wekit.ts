@@ -1,9 +1,10 @@
 import { PluginManager } from "../PluginManager";
 import { WekitOptions } from "../WekitOptions";
-import { Emitter } from "@wekit/shared";
+import { Emitter, Log } from "@wekit/shared";
 import { defPage } from "../defPage";
 import { injectPreloadEvent } from "../helper/injectPreloadEvent";
 import { defComponent } from "../defComponent";
+import { calcRelativePath, getCurrentPage } from "../helper/injectWxRequire";
 
 export class Wekit {
   private pluginManager = new PluginManager(this);
@@ -18,7 +19,13 @@ export class Wekit {
   }
 
   require(path: string, cb: (mod: any) => any) {
-    return this._require(path, cb);
+    path = calcRelativePath(getCurrentPage().is, path);
+    try {
+      Log.info(path, "onPreload before");
+      return this._require(path, cb);
+    } catch (error) {
+      Log.warn(path, "onPreload before", error);
+    }
   }
 
   destroy() {
