@@ -5,7 +5,7 @@ export class ConsolePlugin implements Plugin {
   install(ctx: Wekit) {
     console.log(ctx);
     ctx.pageEventEmitter.on("onInit", (wk: any) => {
-      const options = wk.meta.options;
+      const options = wk.meta.instance;
       console.log(options);
       const ignoreMethods = [
         "setData",

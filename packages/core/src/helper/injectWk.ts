@@ -22,7 +22,7 @@ export function injectWk(options: any, type: WkType) {
       isInitData: true,
       cachePropKeys: null,
       lock: false,
-      options: options,
+      instance: options,
       type,
     },
   };

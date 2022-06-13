@@ -47,7 +47,7 @@ export class PerfReportPlugin implements Plugin {
     });
 
     ctx.pageEventEmitter.on("flushView", ({ wk }: any) => {
-      const page = wk.meta.options;
+      const page = wk.meta.instance;
       updatePagePerfReport(page);
       console.log(
         LOG_PREFIX,
