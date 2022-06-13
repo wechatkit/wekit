@@ -1,10 +1,9 @@
 import { PluginManager } from "../PluginManager";
 import { WekitOptions } from "../WekitOptions";
-import { Emitter, Log } from "@wekit/shared";
+import { calcRelativePath, Emitter, getCurrentPage, Log } from "@wekit/shared";
 import { defPage } from "../defPage";
 import { injectPreloadEvent } from "../helper/injectPreloadEvent";
 import { defComponent } from "../defComponent";
-import { calcRelativePath, getCurrentPage } from "../helper/injectWxRequire";
 
 export class Wekit {
   private pluginManager = new PluginManager(this);

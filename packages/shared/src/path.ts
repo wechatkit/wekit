@@ -1,6 +1,3 @@
-import { Log } from "@wekit/shared";
-import { Wekit } from "../core/Wekit";
-
 export function calcRelativePath(currentPath = "", relativePath = "") {
   if (relativePath.startsWith("/")) {
     return relativePath;
@@ -22,9 +19,4 @@ export function calcRelativePath(currentPath = "", relativePath = "") {
     }
   }
   return currentPathArr.join("/") + "/" + relativePathFile;
-}
-
-export function getCurrentPage() {
-  const pages = getCurrentPages();
-  return pages[pages.length - 1];
 }

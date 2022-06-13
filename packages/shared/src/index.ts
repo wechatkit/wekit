@@ -7,3 +7,5 @@ export * from "./Emitter";
 export * from "./setTargetValue";
 export * from "./deepClone";
 export * from "./queryParse";
+export * from "./page";
+export * from "./path";
