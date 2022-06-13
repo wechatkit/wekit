@@ -13,6 +13,6 @@
   "dependencies": {
     "@wekit/core": "workspace:^1.0.2",
     "@wekit/plugin-console": "workspace:^1.0.1",
-    "@wekit/shared": "workspace:^1.0.2"
+    "@wekit/shared": "workspace:^1.0.3"
   }
 }

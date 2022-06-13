@@ -1,5 +1,11 @@
 # @wekit/shared
 
+## 1.0.3
+
+### Patch Changes
+
+- 事件后调参数优化
+
 ## 1.0.2
 
 ### Patch Changes
