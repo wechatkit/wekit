@@ -1,8 +1,10 @@
 import { Wekit } from "../core/Wekit";
 import { setTargetValue } from "@wekit/shared";
+import { Wk } from "./injectWk";
+import { getWk } from "../utils/getWk";
 
 export function injectSetDataHelper(options: any) {
-  const wk = options.__wk__();
+  const wk = getWk(options);
   function _setData(data: AnyObject, cb: () => void) {
     for (const key in data) {
       const value = data[key];
@@ -21,7 +23,7 @@ export function injectSetDataHelper(options: any) {
   return _setData;
 }
 
-function triggerFlush(wk: any) {
+function triggerFlush(wk: Wk) {
   if (!wk.meta.rawSetData) {
     return;
   }
@@ -34,8 +36,8 @@ function triggerFlush(wk: any) {
     const wekit = Wekit.globalWekit;
     const updateData = wk.meta.updateData;
     wk.meta.updateData = {};
-    wekit.pageEventEmitter.emit("flushView", wk.instance, updateData);
-    wk.meta.rawSetData(updateData);
+    wekit.pageEventEmitter.emit("flushView", wk.meta.instance, updateData);
+    wk.meta.rawSetData!(updateData);
     wk.meta.lock = false;
   }
 }

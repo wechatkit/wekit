@@ -1,11 +1,14 @@
+import { getWk } from "../utils/getWk";
+
 export function injectPropProxy(target: any, proxy: any) {
-  let propKeys = target.__wk__().meta.cachePropKeys;
+  const wk = getWk(target);
+  let propKeys = wk.meta.cachePropKeys;
   if (!propKeys) {
     const keys = Object.keys(proxy);
     propKeys = keys.filter(
       (key) => typeof proxy[key] !== "function" && key !== "data"
     );
-    target.__wk__().meta.cachePropKeys = propKeys;
+    wk.meta.cachePropKeys = propKeys;
   }
 
   for (let i = 0; i < propKeys.length; i++) {

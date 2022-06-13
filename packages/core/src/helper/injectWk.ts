@@ -5,7 +5,22 @@ export enum WkType {
   COMPONENT,
 }
 
-export function injectWk(options: any, type: WkType) {
+export interface WkMeta {
+  isPreload: boolean;
+  updateData: AnyObject;
+  rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
+  dataFactory: () => AnyObject;
+  isInitData: boolean;
+  cachePropKeys: string[] | null;
+  lock: boolean;
+  instance: AnyObject;
+  type: WkType;
+}
+export interface Wk {
+  meta: WkMeta;
+}
+
+export function injectWk(options: AnyObject, type: WkType) {
   const dataBackup =
     typeof options.data === "function" ? deepClone(options.data) : options.data;
   const dataFactory =
@@ -13,11 +28,11 @@ export function injectWk(options: any, type: WkType) {
       ? options.data
       : () => deepClone(dataBackup);
 
-  const wk = {
+  const wk: Wk = {
     meta: {
       isPreload: false,
-      updateData: {} as any,
-      rawSetData: null as any,
+      updateData: {},
+      rawSetData: null,
       dataFactory: dataFactory,
       isInitData: true,
       cachePropKeys: null,
@@ -33,7 +48,7 @@ export function injectWk(options: any, type: WkType) {
     },
     enumerable: true,
     configurable: false,
-    writable: true,
+    writable: false,
   });
 
   return wk;

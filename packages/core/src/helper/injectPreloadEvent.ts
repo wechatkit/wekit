@@ -2,10 +2,11 @@ import { injectHookBefore } from "@wekit/shared";
 import { Log } from "@wekit/shared";
 import { queryParse } from "@wekit/shared";
 import { Wekit } from "../core/Wekit";
+import { getWk } from "../utils/getWk";
 
 export function injectPreloadEvent(type: any) {
   const wekit = Wekit.globalWekit;
-  injectHookBefore(wx, type, function (_, opts) {
+  injectHookBefore(wx, type, function(_, opts) {
     let [path, query] = opts.url.split("?");
     wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
@@ -18,7 +19,7 @@ export function injectPreloadEvent(type: any) {
 }
 
 export function callPreload(ctx: any) {
-  const wk = ctx.__wk__();
+  const wk = getWk(ctx);
   try {
     if (wk.meta.isPreload) {
       return;

@@ -3,3 +3,4 @@ export * from "./defPage";
 export * from "./defComponent";
 export * from "./Plugin";
 export * from "./core/Wekit";
+export * from "./utils/getWk";
