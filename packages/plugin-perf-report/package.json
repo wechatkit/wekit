@@ -1,6 +1,6 @@
 {
   "name": "@wekit/plugin-perf-report",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "wekit plugin perf-report",
   "main": "./dist/wekit-plugin-perf-report.cjs.js",
   "module": "./dist/wekit-plugin-perf-report.esm.js",
