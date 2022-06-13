@@ -1,6 +1,6 @@
 {
   "name": "@wekit/plugin-console",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "wekit plugin console",
   "main": "./dist/wekit-plugin-console.cjs.js",
   "module": "./dist/wekit-plugin-console.esm.js",
@@ -8,15 +8,28 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/wechatkit/wekit/tree/main/packages/plugin-console",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wechatkit/wekit.git"
+  },
   "keywords": [
     "wekit",
-    "plugin",
-    "wekit-plugin"
+    "wekit-shared",
+    "wekit-plugin",
+    "wechat",
+    "wechatkit",
+    "wx",
+    "weixin"
   ],
-  "author": "wmc",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "WumaCoder",
   "license": "ISC",
   "dependencies": {
-    "@wekit/core": "workspace:^0.0.0",
-    "@wekit/shared": "workspace:^0.0.0"
+    "@wekit/core": "workspace:^0.1.0",
+    "@wekit/shared": "workspace:^0.1.0"
   }
 }
