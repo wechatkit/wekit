@@ -1,5 +1,11 @@
 # @wekit/shared
 
+## 1.1.0
+
+### Minor Changes
+
+- 优化插件类型提示和参数
+
 ## 1.0.4
 
 ### Patch Changes
