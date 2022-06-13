@@ -14,8 +14,10 @@ describe("Wekit.ts", () => {
       uninstall = uninstallFn;
     }
     const wekit = Wekit.create({
-      name: "test",
-      debug: true,
+      config: {
+        require: require,
+        debug: true,
+      },
       plugins: [new WekitPluginPerf()],
     });
     wekit.destroy();
