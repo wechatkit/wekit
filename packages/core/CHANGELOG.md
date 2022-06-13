@@ -1,5 +1,14 @@
 # @wekit/core
 
+## 1.0.4
+
+### Patch Changes
+
+- - 解决低版本问题
+  - 修改 meta.options 为 meta.instance
+- Updated dependencies
+  - @wekit/shared@1.0.4
+
 ## 1.0.2
 
 ### Patch Changes

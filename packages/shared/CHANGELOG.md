@@ -1,5 +1,12 @@
 # @wekit/shared
 
+## 1.0.4
+
+### Patch Changes
+
+- - 解决低版本问题
+  - 修改 meta.options 为 meta.instance
+
 ## 1.0.3
 
 ### Patch Changes
