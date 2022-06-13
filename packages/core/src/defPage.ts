@@ -34,6 +34,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   });
 
   injectHookBefore(options, "onLoad", function(ctx: any) {
+    (options as any).route = ctx.route; // 解决低版本问题
     injectPropProxy(ctx, options);
     ctx.data = options.data;
     ctx.__data__ = options.data;
