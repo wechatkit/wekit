@@ -15,6 +15,14 @@
     "type": "git",
     "url": "https://github.com/wechatkit/wekit.git"
   },
+  "keywords": [
+    "wekit",
+    "wekit-core",
+    "wechat",
+    "wechatkit",
+    "wx",
+    "weixin"
+  ],
   "dependencies": {
     "@wekit/shared": "workspace:^0.0.0"
   }
