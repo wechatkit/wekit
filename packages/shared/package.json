@@ -21,6 +21,10 @@
     "wx",
     "weixin"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "author": "WumaCoder",
   "license": "MIT"
 }
