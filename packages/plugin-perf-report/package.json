@@ -1,0 +1,37 @@
+{
+  "name": "@wekit/plugin-perf-report",
+  "version": "1.0.0",
+  "description": "wekit plugin perf-report",
+  "main": "./dist/wekit-plugin-perf-report.cjs.js",
+  "module": "./dist/wekit-plugin-perf-report.esm.js",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/wechatkit/wekit/tree/main/packages/plugin-perf-report",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wechatkit/wekit.git"
+  },
+  "keywords": [
+    "wekit",
+    "wekit-shared",
+    "wekit-plugin",
+    "perf-report",
+    "performance",
+    "wechat",
+    "wechatkit",
+    "wx",
+    "weixin"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "WumaCoder",
+  "license": "ISC",
+  "dependencies": {
+    "@wekit/core": "workspace:^1.0.2",
+    "@wekit/shared": "workspace:^1.0.2"
+  }
+}
