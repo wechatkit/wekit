@@ -1,5 +1,11 @@
 # @wekit/plugin-perf-report
 
+## 1.1.1
+
+### Patch Changes
+
+- 修复报错 BUG
+
 ## 1.1.0
 
 ### Minor Changes
