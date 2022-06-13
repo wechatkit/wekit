@@ -20,10 +20,10 @@ export class Wekit {
   require(path: string, cb: (mod: any) => any) {
     path = calcRelativePath(getCurrentPage().is, path);
     try {
-      Log.info(path, "onPreload before");
+      Log.info(path, "require");
       return this._require(path, cb);
     } catch (error) {
-      Log.warn(path, "onPreload before", error);
+      Log.warn(path, "require", error);
     }
   }
 
