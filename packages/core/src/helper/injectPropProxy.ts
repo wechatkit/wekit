@@ -2,7 +2,9 @@ export function injectPropProxy(target: any, proxy: any) {
   let propKeys = target.__wk__().meta.cachePropKeys;
   if (!propKeys) {
     const keys = Object.keys(proxy);
-    propKeys = keys.filter((key) => typeof proxy[key] !== "function");
+    propKeys = keys.filter(
+      (key) => typeof proxy[key] !== "function" && key !== "data"
+    );
     target.__wk__().meta.cachePropKeys = propKeys;
   }
 
