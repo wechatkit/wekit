@@ -2,7 +2,7 @@ import { injectHookBefore } from "./injectHook";
 import { FunctionArgs } from "./type-tools";
 
 export const createEvent = <Payload>(event: string) =>
-  event as unknown as Payload;
+  (event as unknown) as Payload;
 
 export class Emitter {
   private eventMap = new Map<any, Set<AnyFunction>>();
@@ -13,25 +13,25 @@ export class Emitter {
       events = new Set();
       this.eventMap.set(event, events);
     }
-    events.add(eventCb as unknown as AnyFunction);
+    events.add((eventCb as unknown) as AnyFunction);
     return this;
   }
 
   off<E = AnyObject>(event: string | E, eventCb: E) {
     const events = this.eventMap.get(event);
     if (events) {
-      events.delete(eventCb as unknown as AnyFunction);
+      events.delete((eventCb as unknown) as AnyFunction);
     }
     return this;
   }
 
   emit<E = AnyObject, T = unknown>(
     event: string | E,
-    data: FunctionArgs<E> | T
+    ...args: FunctionArgs<E> | T[]
   ) {
     const events = this.eventMap.get(event);
     if (events) {
-      events.forEach((eventCb) => eventCb(data));
+      events.forEach((eventCb) => eventCb(...args));
     }
     return this;
   }
@@ -46,7 +46,7 @@ export class Emitter {
 
   bindListener<T>(options: T) {
     this.getEventNames().forEach((name) => {
-      injectHookBefore(options, name, (...args) => this.emit(name, args));
+      injectHookBefore(options, name, (...args) => this.emit(name, ...args));
     });
   }
 }
