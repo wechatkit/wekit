@@ -1,5 +1,5 @@
 import { Wekit } from "./core/Wekit";
-import { injectHookBefore } from "@wekit/shared";
+import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
 import { injectPropProxy } from "./helper/injectPropProxy";
 import { injectWk, WkType } from "./helper/injectWk";
@@ -28,12 +28,12 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   wekit.pageEventEmitter.emit("onInit", wk);
 
-  injectHookBefore(options, "onPreload", function () {
+  injectHookBefore(options, "onPreload", function() {
     if (!wk.meta.isInitData)
       options.data = wk.meta.dataFactory.call(options) as any;
   });
 
-  injectHookBefore(options, "onLoad", function (ctx: any) {
+  injectHookBefore(options, "onLoad", function(ctx: any) {
     injectPropProxy(ctx, options);
     ctx.data = options.data;
     ctx.__data__ = options.data;
@@ -51,7 +51,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     callPreload(ctx);
   });
 
-  injectHookBefore(options, "onUnload", function (ctx: any) {
+  injectHookAfter(options, "onUnload", function(ctx: any) {
     wk.meta.isPreload = false;
     wk.meta.updateData = {};
     wk.meta.rawSetData = null;

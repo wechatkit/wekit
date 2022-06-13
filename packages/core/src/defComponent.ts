@@ -1,4 +1,4 @@
-import { injectHookBefore } from "@wekit/shared";
+import { injectHookBefore, injectHookAfter } from "@wekit/shared";
 import { Wekit } from "./core/Wekit";
 import { injectPropProxy } from "./helper/injectPropProxy";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
@@ -43,7 +43,7 @@ export function defComponent<
 
   wekit.pageEventEmitter.emit("onInit", wk);
 
-  injectHookBefore<any>(options.lifetimes, "attached", function (ctx: any) {
+  injectHookBefore<any>(options.lifetimes, "attached", function(ctx: any) {
     injectPropProxy(ctx, options);
     ctx.data = options.data;
     ctx.__data__ = options.data;
@@ -59,7 +59,7 @@ export function defComponent<
     });
   });
 
-  injectHookBefore<any>(options.lifetimes, "detached", function (ctx: any) {
+  injectHookAfter<any>(options.lifetimes, "detached", function(ctx: any) {
     wk.meta.updateData = {};
     wk.meta.rawSetData = null;
     wk.meta.isInitData = false;
