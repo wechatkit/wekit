@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "scripts": {
     "build": " pnpm rollup -c rollup.config.ts --pack-name ",
-    "build:all": "pnpm build shared && pnpm build core && pnpm build plugin-console",
+    "build:all": "pnpm build shared && pnpm build core && pnpm build plugin-console && pnpm build plugin-perf-report",
     "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --inspect-brk\" jest"
   },
   "keywords": [],
