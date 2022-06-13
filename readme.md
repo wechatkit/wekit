@@ -7,6 +7,7 @@
 
 - [x] 轻量的体积，整个核心代码大概有 5.9KB
 - [x] 更好的性能，对 `setData` 的操作进行合并、并且增加一个比 `onLoad` 更早执行的页面事件 `onPreload`
+- [x] 兼容原生语法，方便代码迁移
 - [x] 强大的插件，该框架非常核心的地方就是拥有插件系统，我们可以使用插件系统提供的事件来增强功能
 - [ ] 混入复用支持，一个用来提高代码复用的特性
 - [ ] 更好的提示，在写代码的时候提供更舒服的类型提示
@@ -76,11 +77,10 @@ const util = require("../../utils/util.js");
 
 module.exports = defPage({
   data: () => ({
-    // 这里可以使用对象，但是更好的方式是使用函数返回
     logs: [],
   }),
-  onLoad() {
-    console.log(this.data.logs);
+  onPreload() {
+    console.log("onPreload", this.data.logs);
     this.setData({
       logs: (wx.getStorageSync("logs") || []).map((log) => {
         return {
