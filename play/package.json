@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "play",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@wekit/core": "workspace:^1.0.4",
-    "@wekit/plugin-console": "workspace:^1.0.2",
-    "@wekit/shared": "workspace:^1.0.4"
+    "@wekit/core": "workspace:^1.1.1",
+    "@wekit/plugin-console": "workspace:^1.1.1",
+    "@wekit/shared": "workspace:^1.1.1"
   }
 }

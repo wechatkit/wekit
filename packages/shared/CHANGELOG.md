@@ -1,5 +1,11 @@
 # @wekit/shared
 
+## 1.1.1
+
+### Patch Changes
+
+- 修复 setData 事件问题
+
 ## 1.1.0
 
 ### Minor Changes
