@@ -46,7 +46,7 @@ importers:
 
   packages/plugin-console:
     specifiers:
-      '@wekit/core': workspace:^1.1.1
+      '@wekit/core': workspace:^1.1.2
       '@wekit/shared': workspace:^1.1.1
     dependencies:
       '@wekit/core': link:../core
@@ -54,7 +54,7 @@ importers:
 
   packages/plugin-perf-report:
     specifiers:
-      '@wekit/core': workspace:^1.1.1
+      '@wekit/core': workspace:^1.1.2
       '@wekit/shared': workspace:^1.1.1
     dependencies:
       '@wekit/core': link:../core
@@ -65,8 +65,8 @@ importers:
 
   play:
     specifiers:
-      '@wekit/core': workspace:^1.1.1
-      '@wekit/plugin-console': workspace:^1.1.1
+      '@wekit/core': workspace:^1.1.2
+      '@wekit/plugin-console': workspace:^1.1.2
       '@wekit/shared': workspace:^1.1.1
     dependencies:
       '@wekit/core': link:../packages/core
