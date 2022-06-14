@@ -1,6 +1,6 @@
 {
   "name": "@wekit/plugin-console",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "wekit plugin console",
   "main": "./dist/wekit-plugin-console.cjs.js",
   "module": "./dist/wekit-plugin-console.esm.js",
@@ -29,7 +29,7 @@
   "author": "WumaCoder",
   "license": "ISC",
   "dependencies": {
-    "@wekit/core": "workspace:^1.1.1",
+    "@wekit/core": "workspace:^1.1.2",
     "@wekit/shared": "workspace:^1.1.1"
   }
 }
