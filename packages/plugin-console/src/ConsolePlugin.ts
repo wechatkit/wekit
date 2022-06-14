@@ -4,8 +4,7 @@ import { injectHookBefore } from "@wekit/shared";
 export class ConsolePlugin implements Plugin {
   install(ctx: Wekit) {
     console.log(ctx);
-    ctx.pageEventEmitter.on("onInit", (wk: any) => {
-      const options = wk.meta.instance;
+    ctx.pageEventEmitter.on("onInit", (options: any) => {
       console.log(options);
       const ignoreMethods = [
         "setData",
@@ -13,6 +12,7 @@ export class ConsolePlugin implements Plugin {
         "onUnload",
         "onShow",
         "onHide",
+        "__wk__",
       ];
 
       for (const key in options) {
