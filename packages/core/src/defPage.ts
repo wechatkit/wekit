@@ -37,6 +37,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     (options as any).route = ctx.route; // 解决低版本问题
     (options as any).options = ctx.options; // 解决低版本问题
     injectPropProxy(ctx, options);
+    callPreload(options);
     ctx.data = options.data;
     ctx.__data__ = options.data;
     const updateData = wk.meta.updateData;
@@ -49,8 +50,6 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
       enumerable: true,
       configurable: true,
     });
-
-    callPreload(ctx);
   });
 
   injectHookAfter(options, "onUnload", function(ctx: any) {
