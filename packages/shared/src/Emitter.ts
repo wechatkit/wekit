@@ -5,6 +5,7 @@ export const createEvent = <Payload>(event: string) =>
   (event as unknown) as Payload;
 
 export class Emitter {
+  private ignoreBindListener = ["setData"];
   private eventMap = new Map<any, Set<AnyFunction>>();
 
   on<E = AnyObject>(event: string | E, eventCb: E) {
@@ -46,7 +47,9 @@ export class Emitter {
 
   bindListener<T>(options: T) {
     this.getEventNames().forEach((name) => {
-      injectHookBefore(options, name, (...args) => this.emit(name, ...args));
+      if (!this.ignoreBindListener.includes(name)) {
+        injectHookBefore(options, name, (...args) => this.emit(name, ...args));
+      }
     });
   }
 }

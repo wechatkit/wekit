@@ -4,8 +4,10 @@ import { Wk } from "./injectWk";
 import { getWk } from "../utils/getWk";
 
 export function injectSetDataHelper(options: any) {
+  const wekit = Wekit.globalWekit;
   const wk = getWk(options);
   function _setData(data: AnyObject, cb: () => void) {
+    wekit.pageEventEmitter.emit("setData", wk.meta.instance, data);
     for (const key in data) {
       const value = data[key];
       const [cKey] = setTargetValue(options.data, key, value);
