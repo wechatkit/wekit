@@ -8,6 +8,7 @@ const app = getApp()
 module.exports = defPage({
   data: ()=>({
     motto: 'Hello World',
+    count: 0,
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -18,6 +19,15 @@ module.exports = defPage({
   bindViewTap() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+  },
+
+  addCount(e){
+    this.setData({
+      count: this.data.count + 1
+    })
+    this.setData({
+      count: this.data.count + 1
     })
   },
   

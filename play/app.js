@@ -1,7 +1,46 @@
 // app.js
 const { createApp } = require('@wekit/core')
-const { ConsolePlugin } = require('@wekit/plugin-console')
+class ConsolePlugin{
+  install(ctx){
+      const eventFlow = [];
+      console.log('ConsolePlugin',ctx)
+      const addEventFlow = (data)=>{
+          eventFlow.push(data);
+      }
+      ctx.pageEventEmitter.on('onLoad', (instance)=>{
+          addEventFlow({
+              event: 'onLoad',
+              page: instance.route
+          });
+      });
+      ctx.pageEventEmitter.on('onReady', (instance)=>{
+          addEventFlow({
+              event: 'onReady',
+              page: instance.route
+          });
+      });
+      ctx.pageEventEmitter.on('setData', (instance, data)=>{
+          addEventFlow({
+              event: 'setData',
+              page: instance.route,
+              data
+          });
+      });
+      ctx.pageEventEmitter.on('flushView', (instance, data)=>{
+          addEventFlow({
+              event: 'flushView',
+              page: instance.route,
+              data
+          });
+      });
 
+      wx.wekit = {
+          getEventFlow(){
+              console.table(eventFlow)
+          }
+      }
+  }
+}
 createApp({
   config: require('./wekit.config'),
   plugins: [new ConsolePlugin],
