@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.2
+
+### Patch Changes
+
+- 修复低版本兼容性问题
+
 ## 1.2.1
 
 ### Patch Changes
