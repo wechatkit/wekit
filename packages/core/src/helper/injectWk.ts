@@ -7,6 +7,8 @@ export enum WkType {
 
 export interface WkMeta {
   isPreload: boolean;
+  isLoad: boolean;
+  isReady: boolean;
   updateData: AnyObject;
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
@@ -21,16 +23,16 @@ export interface Wk {
 }
 
 export function injectWk(options: AnyObject, type: WkType) {
-  const dataBackup =
+  const _data =
     typeof options.data === "function" ? deepClone(options.data) : options.data;
   const dataFactory =
-    typeof options.data === "function"
-      ? options.data
-      : () => deepClone(dataBackup);
+    typeof options.data === "function" ? options.data : () => deepClone(_data);
 
   const wk: Wk = {
     meta: {
       isPreload: false,
+      isLoad: false,
+      isReady: false,
       updateData: {},
       rawSetData: null,
       dataFactory: dataFactory,

@@ -26,24 +26,17 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const _setData = injectSetDataHelper(options);
 
-  wekit.pageEventEmitter.emit("onInit", options);
-
-  injectHookBefore(options, "onPreload", function() {
-    if (!wk.meta.isInitData)
-      options.data = wk.meta.dataFactory.call(options) as any;
-  });
-
-  injectHookBefore(options, "onLoad", function(ctx: any) {
+  injectHookBefore(options, "onLoad", (ctx: any) => {
+    wk.meta.isLoad = true;
     (options as any).route = ctx.route; // 解决低版本问题
     (options as any).options = ctx.options; // 解决低版本问题
     injectPropProxy(ctx, options);
     callPreload(options);
-    ctx.data = options.data;
     ctx.__data__ = options.data;
     const updateData = wk.meta.updateData;
     wk.meta.updateData = {};
-    ctx.setData(updateData);
-    wk.meta.rawSetData = ctx.setData.bind(ctx);
+    wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
+    wk.meta.rawSetData!(updateData);
     Object.defineProperty(ctx, "setData", {
       value: _setData,
       writable: true,
@@ -52,14 +45,22 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     });
   });
 
-  injectHookAfter(options, "onUnload", function(ctx: any) {
+  injectHookBefore(options, "onReady", () => {
+    wk.meta.isReady = true;
+  });
+
+  injectHookAfter(options, "onUnload", (ctx: any) => {
     wk.meta.isPreload = false;
+    wk.meta.isLoad = false;
+    wk.meta.isReady = false;
     wk.meta.updateData = {};
     wk.meta.rawSetData = null;
     wk.meta.isInitData = false;
     options.data = null as any;
-    ctx.data = null;
+    ctx.__data__ = null;
   });
+
+  wekit.pageEventEmitter.emit("onInit", options);
 
   wekit.pageEventEmitter.bindListener(options);
 
