@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.0
+
+### Minor Changes
+
+- 添加新的 wkAPI wait
+
 ## 1.1.2
 
 ### Patch Changes
