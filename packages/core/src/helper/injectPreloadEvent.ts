@@ -22,7 +22,7 @@ export function callPreload(ctx: any) {
   const wk = getWk(ctx);
   try {
     if (wk.meta.isPreload) {
-      return;
+      return false;
     }
     Log.info("load", ctx.route);
     wk.meta.isPreload = true;
@@ -30,4 +30,5 @@ export function callPreload(ctx: any) {
   } catch (error) {
     Log.error(ctx.route, "onPreload call", error);
   }
+  return true;
 }

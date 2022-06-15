@@ -36,8 +36,9 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     wk.meta.isLoad = true;
     (options as any).route = ctx.route; // 解决低版本问题
     (options as any).options = ctx.options; // 解决低版本问题
-    injectPropProxy(ctx, options);
-    callPreload(options);
+    if (!callPreload(ctx)) {
+      injectPropProxy(ctx, options);
+    }
     ctx.__data__ = options.data;
     checkInstanceData(ctx, options);
     const updateData = wk.meta.updateData;
