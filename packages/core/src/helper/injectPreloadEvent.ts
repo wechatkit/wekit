@@ -26,7 +26,6 @@ export function callPreload(ctx: any) {
     }
     Log.info("load", ctx.route);
     wk.meta.isPreload = true;
-    if (!wk.meta.isInitData) ctx.data = wk.meta.dataFactory.call(ctx);
     ctx.onPreload.call(ctx, ctx.options);
   } catch (error) {
     Log.error(ctx.route, "onPreload call", error);
