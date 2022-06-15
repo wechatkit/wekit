@@ -19,7 +19,7 @@ export function injectSetDataHelper(options: any) {
   Object.defineProperty(options, "setData", {
     value: _setData,
     writable: true,
-    enumerable: false,
+    enumerable: true,
     configurable: true,
   });
   return _setData;

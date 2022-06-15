@@ -44,12 +44,6 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     wk.meta.updateData = {};
     wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
     wk.meta.rawSetData!(updateData);
-    Object.defineProperty(ctx, "setData", {
-      value: _setData,
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    });
   });
 
   injectHookBefore(options, "onReady", () => {
