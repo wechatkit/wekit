@@ -57,6 +57,10 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   });
 
   injectHookAfter(options, "onUnload", (ctx: any) => {
+    wk.meta.dyListener.forEach((item) => {
+      wekit.pageEventEmitter.off(item.event, item.handler);
+    });
+    wk.meta.dyListener = [];
     wk.meta.isPreload = false;
     wk.meta.isLoad = false;
     wk.meta.isReady = false;

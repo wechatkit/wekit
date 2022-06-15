@@ -1,4 +1,5 @@
 import { deepClone } from "@wekit/shared";
+import { Wekit } from "../core/Wekit";
 
 export enum WkType {
   PAGE,
@@ -17,12 +18,15 @@ export interface WkMeta {
   lock: boolean;
   instance: AnyObject;
   type: WkType;
+  dyListener: { event: string; handler: AnyFunction }[];
 }
 export interface Wk {
   meta: WkMeta;
+  wait(event: string, callback?: AnyFunction): Promise<void>;
 }
 
 export function injectWk(options: AnyObject, type: WkType) {
+  const wekit = Wekit.globalWekit;
   const _data =
     typeof options.data === "function" ? deepClone(options.data) : options.data;
   const dataFactory =
@@ -41,6 +45,22 @@ export function injectWk(options: AnyObject, type: WkType) {
       lock: false,
       instance: options,
       type,
+      dyListener: [],
+    },
+    wait(event: string, callback?: AnyFunction) {
+      return new Promise((resolve) => {
+        if (wk.meta.isReady) {
+          callback && callback();
+          resolve();
+          return;
+        }
+        const handler = () => {
+          callback && callback();
+          resolve();
+        };
+        wk.meta.dyListener.push({ event, handler });
+        wekit.pageEventEmitter.on(event, handler);
+      });
     },
   };
 
