@@ -12,15 +12,18 @@ export function injectPropProxy(target: any, proxy: any) {
   }
 
   for (let i = 0; i < propKeys.length; i++) {
-    const key = propKeys[i];
-    Object.defineProperty(target, key, {
-      get() {
-        return proxy[key];
-      },
-      set(value) {
-        proxy[key] = value;
-        return true;
-      },
-    });
+    const key: string = propKeys[i];
+
+    if (!(key in target)) {
+      Object.defineProperty(target, key, {
+        get() {
+          return proxy[key];
+        },
+        set(value) {
+          proxy[key] = value;
+          return true;
+        },
+      });
+    }
   }
 }

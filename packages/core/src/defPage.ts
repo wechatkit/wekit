@@ -55,6 +55,9 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     wk.meta.dyListener.forEach((item) => {
       wekit.pageEventEmitter.off(item.event, item.handler);
     });
+    wk.meta.cachePropKeys.forEach((key) => {
+      (options as any)[key] = null;
+    });
     wk.meta.dyListener = [];
     wk.meta.isPreload = false;
     wk.meta.isLoad = false;

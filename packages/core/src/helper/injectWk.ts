@@ -14,7 +14,7 @@ export interface WkMeta {
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
   isInitData: boolean;
-  cachePropKeys: string[] | null;
+  cachePropKeys: string[];
   lock: boolean;
   instance: AnyObject;
   type: WkType;
@@ -41,7 +41,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       rawSetData: null,
       dataFactory: dataFactory,
       isInitData: true,
-      cachePropKeys: null,
+      cachePropKeys: [],
       lock: false,
       instance: options,
       type,
