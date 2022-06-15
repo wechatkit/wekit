@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.1
+
+### Patch Changes
+
+- 修复 setData 的问题
+
 ## 1.2.0
 
 ### Minor Changes
