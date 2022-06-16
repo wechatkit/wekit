@@ -58,7 +58,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   injectHookAfter(options, "onUnload", (ctx: any) => {
     if (wk.meta.isPreOptimize) {
       wk.meta.cachePropKeys.forEach((key) => {
-        (options as any)[key] = null;
+        (options as any)[key] = undefined;
       });
       wk.meta.isInitData = false;
       (options as any).data = null;

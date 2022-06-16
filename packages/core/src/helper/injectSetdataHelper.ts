@@ -4,6 +4,7 @@ import { Wk } from "./injectWk";
 import { getWk } from "../utils/getWk";
 
 export function injectSetDataHelper(options: any) {
+  // 暂时不适配defComponent
   const wekit = Wekit.globalWekit;
   const wk = getWk(options);
   function _setData(data: AnyObject, cb: () => void) {
