@@ -10,6 +10,8 @@ export function injectPreloadEvent(type: any) {
     let [path, query] = opts.url.split("?");
     wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
+        const wk = ctx.__wk__();
+        wk.meta.isPreOptimize = true;
         ctx.options = queryParse(query);
         ctx.route = path.substring(1);
         callPreload(ctx);

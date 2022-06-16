@@ -7,11 +7,13 @@ export function injectSetDataHelper(options: any) {
   const wekit = Wekit.globalWekit;
   const wk = getWk(options);
   function _setData(data: AnyObject, cb: () => void) {
-    wekit.pageEventEmitter.emit("setData", wk.meta.instance, data);
+    const instance = wk.meta.instance;
+    wekit.pageEventEmitter.emit("setData", instance, data);
+
     for (const key in data) {
       const value = data[key];
-      const [cKey] = setTargetValue(options.data, key, value);
-      wk.meta.updateData[cKey] = options.data[cKey];
+      const [cKey] = setTargetValue(instance.data, key, value);
+      wk.meta.updateData[cKey] = instance.data[cKey];
     }
     cb && cb();
     triggerFlush(wk);

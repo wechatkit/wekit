@@ -34,17 +34,20 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   injectHookBefore(options, "onLoad", (ctx: any) => {
     wk.meta.isLoad = true;
-    (options as any).route = ctx.route; // 解决低版本问题
-    (options as any).options = ctx.options; // 解决低版本问题
-    if (!callPreload(ctx)) {
-      injectPropProxy(ctx, options);
-    }
-    ctx.__data__ = options.data;
-    checkInstanceData(ctx, options);
-    const updateData = wk.meta.updateData;
-    wk.meta.updateData = {};
+    wk.meta.instance = ctx;
     wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
-    wk.meta.rawSetData!(updateData);
+    if (wk.meta.isPreOptimize) {
+      ctx.__data__ = options.data;
+      const updateData = wk.meta.updateData;
+      wk.meta.updateData = {};
+      injectPropProxy(ctx, options);
+      checkInstanceData(ctx, options);
+      wk.meta.rawSetData!(updateData);
+    } else {
+      (options as any).route = ctx.route; // 解决低版本问题
+      options.options = ctx.options; // 解决低版本问题
+      callPreload(ctx);
+    }
   });
 
   injectHookBefore(options, "onReady", () => {
@@ -52,21 +55,22 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   });
 
   injectHookAfter(options, "onUnload", (ctx: any) => {
+    if (wk.meta.isPreOptimize) {
+      wk.meta.cachePropKeys.forEach((key) => {
+        (options as any)[key] = null;
+      });
+      wk.meta.isInitData = false;
+      (options as any).data = null;
+      ctx.__data__ = null;
+    }
     wk.meta.dyListener.forEach((item) => {
       wekit.pageEventEmitter.off(item.event, item.handler);
-    });
-    wk.meta.cachePropKeys.forEach((key) => {
-      (options as any)[key] = null;
     });
     wk.meta.dyListener = [];
     wk.meta.isPreload = false;
     wk.meta.isLoad = false;
     wk.meta.isReady = false;
-    wk.meta.updateData = {};
     wk.meta.rawSetData = null;
-    wk.meta.isInitData = false;
-    options.data = null as any;
-    ctx.__data__ = null;
   });
 
   wekit.pageEventEmitter.emit("onInit", options);

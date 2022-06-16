@@ -19,6 +19,7 @@ export interface WkMeta {
   instance: AnyObject;
   type: WkType;
   dyListener: { event: string; handler: AnyFunction }[];
+  isPreOptimize: false;
 }
 export interface Wk {
   meta: WkMeta;
@@ -46,6 +47,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       instance: options,
       type,
       dyListener: [],
+      isPreOptimize: false,
     },
     wait(event: string, callback?: AnyFunction) {
       return new Promise((resolve) => {
