@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.4
+
+### Patch Changes
+
+- 优化在低版本上的性能问题
+
 ## 1.2.3
 
 ### Patch Changes
