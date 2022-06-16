@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.3
+
+### Patch Changes
+
+- 优化细节
+
 ## 1.2.2
 
 ### Patch Changes
