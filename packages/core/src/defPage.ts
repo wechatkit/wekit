@@ -28,6 +28,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   const _setData = injectSetDataHelper(options);
 
   injectHookBefore(options, "onPreload", (ctx: any) => {
+    wk.meta.instance = ctx;
     if (!wk.meta.isInitData)
       options.data = wk.meta.dataFactory.call(ctx) as any;
   });
