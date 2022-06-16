@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.5
+
+### Patch Changes
+
+- 修复 onPreload 的问题
+
 ## 1.2.4
 
 ### Patch Changes
