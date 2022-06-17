@@ -40,7 +40,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@wekit/shared': workspace:^1.1.1
+      '@wekit/shared': workspace:^1.1.2
     dependencies:
       '@wekit/shared': link:../shared
 
@@ -54,8 +54,8 @@ importers:
 
   packages/plugin-perf-report:
     specifiers:
-      '@wekit/core': workspace:^1.1.2
-      '@wekit/shared': workspace:^1.1.1
+      '@wekit/core': workspace:^1.2.7
+      '@wekit/shared': workspace:^1.1.2
     dependencies:
       '@wekit/core': link:../core
       '@wekit/shared': link:../shared
