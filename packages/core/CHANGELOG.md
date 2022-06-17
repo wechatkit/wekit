@@ -1,5 +1,13 @@
 # @wekit/core
 
+## 1.2.7
+
+### Patch Changes
+
+- 修复错误
+- Updated dependencies
+  - @wekit/shared@1.1.2
+
 ## 1.2.6
 
 ### Patch Changes

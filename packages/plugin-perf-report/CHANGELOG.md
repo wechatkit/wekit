@@ -1,5 +1,14 @@
 # @wekit/plugin-perf-report
 
+## 1.1.4
+
+### Patch Changes
+
+- 修复错误
+- Updated dependencies
+  - @wekit/core@1.2.7
+  - @wekit/shared@1.1.2
+
 ## 1.1.3
 
 ### Patch Changes
