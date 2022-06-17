@@ -38,11 +38,12 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     if (!ctx.data) ctx.data = wk.meta.dataFactory.call(ctx) as any;
     wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
     if (wk.meta.isPreOptimize) {
+      ctx.data = options.data;
       ctx.__data__ = options.data;
+      // checkInstanceData(ctx, options);
       const updateData = wk.meta.updateData;
       wk.meta.updateData = {};
       injectPropProxy(ctx, options);
-      checkInstanceData(ctx, options);
       wk.meta.rawSetData!(updateData);
     } else {
       (options as any).route = ctx.route; // 解决低版本问题
@@ -61,6 +62,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
       //   (options as any)[key] = undefined;
       // });
       (options as any).data = null;
+      ctx.data = null;
       ctx.__data__ = null;
     }
     wk.meta.dyListener.forEach((item) => {
