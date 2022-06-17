@@ -13,6 +13,7 @@ export interface WkMeta {
   updateData: AnyObject;
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
+  data: AnyObject | null;
   cachePropKeys: string[];
   lock: boolean;
   instance: AnyObject;
@@ -23,13 +24,15 @@ export interface WkMeta {
 export interface Wk {
   meta: WkMeta;
   wait(event: string, callback?: AnyFunction): Promise<void>;
+  initData(ctx: AnyObject): void;
 }
 
 export function injectWk(options: AnyObject, type: WkType) {
   const wekit = Wekit.globalWekit;
-  const _data = deepClone(options.data);
+  const _data = options.data;
   const dataFactory =
     typeof _data === "function" ? _data : () => deepClone(_data);
+  options.data = dataFactory();
 
   const wk: Wk = {
     meta: {
@@ -39,6 +42,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       updateData: {},
       rawSetData: null,
       dataFactory,
+      data: options.data,
       cachePropKeys: [],
       lock: false,
       instance: options,
@@ -60,6 +64,18 @@ export function injectWk(options: AnyObject, type: WkType) {
         wk.meta.dyListener.push({ event, handler });
         wekit.pageEventEmitter.on(event, handler);
       });
+    },
+    initData(ctx) {
+      if (!wk.meta.isPreOptimize) {
+        return;
+      }
+
+      if (!wk.meta.data) {
+        wk.meta.data = wk.meta.dataFactory.call(ctx) as any;
+      }
+      if (!ctx.data || ctx.data !== wk.meta.data) {
+        ctx.data = wk.meta.data;
+      }
     },
   };
 

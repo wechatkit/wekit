@@ -10,11 +10,11 @@ export function injectSetDataHelper(options: any) {
   function _setData(data: AnyObject, cb: () => void) {
     const instance = wk.meta.instance;
     wekit.pageEventEmitter.emit("setData", instance, data);
-
+    const _data = wk.meta.isPreOptimize ? (wk.meta.data as any) : instance.data;
     for (const key in data) {
       const value = data[key];
-      const [cKey] = setTargetValue(instance.data, key, value);
-      wk.meta.updateData[cKey] = instance.data[cKey];
+      const [cKey] = setTargetValue(_data, key, value);
+      wk.meta.updateData[cKey] = _data[cKey];
     }
     cb && cb();
     triggerFlush(wk);

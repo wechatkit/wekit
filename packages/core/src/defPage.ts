@@ -23,23 +23,21 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const wk = injectWk(options, WkType.PAGE);
 
-  options.data = wk.meta.dataFactory.call(options) as any;
+  options.data = wk.meta.data as any;
 
   const _setData = injectSetDataHelper(options);
 
   injectHookBefore(options, "onPreload", (ctx: any) => {
     wk.meta.instance = ctx;
-    if (!ctx.data) ctx.data = wk.meta.dataFactory.call(ctx) as any;
+    wk.initData(ctx);
   });
 
   injectHookBefore(options, "onLoad", (ctx: any) => {
     wk.meta.isLoad = true;
     wk.meta.instance = ctx;
-    if (!ctx.data) ctx.data = wk.meta.dataFactory.call(ctx) as any;
     wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
     if (wk.meta.isPreOptimize) {
-      ctx.data = options.data;
-      ctx.__data__ = options.data;
+      wk.initData(ctx);
       // checkInstanceData(ctx, options);
       const updateData = wk.meta.updateData;
       wk.meta.updateData = {};
@@ -52,27 +50,35 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     }
   });
 
+  // injectHookAfter(options, "onShow", (ctx: any) => {
+  //   wk.meta.instance = ctx;
+  //   wk.initData(ctx);
+  // });
+
   injectHookBefore(options, "onReady", () => {
     wk.meta.isReady = true;
   });
 
   injectHookAfter(options, "onUnload", (ctx: any) => {
-    if (wk.meta.isPreOptimize) {
-      // wk.meta.cachePropKeys.forEach((key) => {
-      //   (options as any)[key] = undefined;
-      // });
-      (options as any).data = null;
-      ctx.data = null;
-      ctx.__data__ = null;
-    }
-    wk.meta.dyListener.forEach((item) => {
-      wekit.pageEventEmitter.off(item.event, item.handler);
+    setTimeout(() => {
+      // 等所有异步任务完成后执行
+      if (wk.meta.isPreOptimize) {
+        // wk.meta.cachePropKeys.forEach((key) => {
+        //   (options as any)[key] = undefined;
+        // });
+        (options as any).data = null;
+        ctx.data = null;
+        wk.meta.data = null;
+      }
+      wk.meta.dyListener.forEach((item) => {
+        wekit.pageEventEmitter.off(item.event, item.handler);
+      });
+      wk.meta.dyListener = [];
+      wk.meta.isPreload = false;
+      wk.meta.isLoad = false;
+      wk.meta.isReady = false;
+      wk.meta.rawSetData = null;
     });
-    wk.meta.dyListener = [];
-    wk.meta.isPreload = false;
-    wk.meta.isLoad = false;
-    wk.meta.isReady = false;
-    wk.meta.rawSetData = null;
   });
 
   wekit.pageEventEmitter.emit("onInit", options);
