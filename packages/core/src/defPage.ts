@@ -29,13 +29,13 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   injectHookBefore(options, "onPreload", (ctx: any) => {
     wk.meta.instance = ctx;
-    if (!wk.meta.isInitData)
-      options.data = wk.meta.dataFactory.call(ctx) as any;
+    if (!ctx.data) ctx.data = wk.meta.dataFactory.call(ctx) as any;
   });
 
   injectHookBefore(options, "onLoad", (ctx: any) => {
     wk.meta.isLoad = true;
     wk.meta.instance = ctx;
+    if (!ctx.data) ctx.data = wk.meta.dataFactory.call(ctx) as any;
     wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
     if (wk.meta.isPreOptimize) {
       ctx.__data__ = options.data;
@@ -57,10 +57,9 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   injectHookAfter(options, "onUnload", (ctx: any) => {
     if (wk.meta.isPreOptimize) {
-      wk.meta.cachePropKeys.forEach((key) => {
-        (options as any)[key] = undefined;
-      });
-      wk.meta.isInitData = false;
+      // wk.meta.cachePropKeys.forEach((key) => {
+      //   (options as any)[key] = undefined;
+      // });
       (options as any).data = null;
       ctx.__data__ = null;
     }

@@ -13,7 +13,6 @@ export interface WkMeta {
   updateData: AnyObject;
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
-  isInitData: boolean;
   cachePropKeys: string[];
   lock: boolean;
   instance: AnyObject;
@@ -28,10 +27,9 @@ export interface Wk {
 
 export function injectWk(options: AnyObject, type: WkType) {
   const wekit = Wekit.globalWekit;
-  const _data =
-    typeof options.data === "function" ? deepClone(options.data) : options.data;
+  const _data = deepClone(options.data);
   const dataFactory =
-    typeof options.data === "function" ? options.data : () => deepClone(_data);
+    typeof _data === "function" ? _data : () => deepClone(_data);
 
   const wk: Wk = {
     meta: {
@@ -40,8 +38,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       isReady: false,
       updateData: {},
       rawSetData: null,
-      dataFactory: dataFactory,
-      isInitData: true,
+      dataFactory,
       cachePropKeys: [],
       lock: false,
       instance: options,
