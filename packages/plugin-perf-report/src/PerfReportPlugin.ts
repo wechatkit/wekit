@@ -19,6 +19,9 @@ export class PerfReportPlugin implements Plugin {
   install(ctx: Wekit) {
     const updatePagePerfReport = (page: any, isForce?: boolean | undefined) => {
       const route = page.route;
+      if (!this.pagePerfReport[route]) {
+        return;
+      }
       const now = Date.now();
       const cost = now - this.pagePerfReport[route].start;
       const dur = now - this.pagePerfReport[route].last;
