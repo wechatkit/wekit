@@ -1,5 +1,13 @@
 # @wekit/core
 
+## 1.2.9
+
+### Patch Changes
+
+- 优化 setData 函数
+- Updated dependencies
+  - @wekit/shared@1.1.3
+
 ## 1.2.8
 
 ### Patch Changes

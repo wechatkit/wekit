@@ -1,5 +1,11 @@
 # @wekit/shared
 
+## 1.1.3
+
+### Patch Changes
+
+- 优化 setData 函数
+
 ## 1.1.2
 
 ### Patch Changes
