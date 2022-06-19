@@ -16,6 +16,7 @@ export interface WkMeta {
   data: AnyObject | null;
   cachePropKeys: string[];
   lock: boolean;
+  options: AnyObject;
   instance: AnyObject;
   type: WkType;
   dyListener: { event: string; handler: AnyFunction }[];
@@ -45,6 +46,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       data: options.data,
       cachePropKeys: [],
       lock: false,
+      options,
       instance: options,
       type,
       dyListener: [],

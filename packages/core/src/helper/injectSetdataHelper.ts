@@ -7,10 +7,11 @@ export function injectSetDataHelper(options: any) {
   // 暂时不适配defComponent
   const wekit = Wekit.globalWekit;
   const wk = getWk(options);
-  function _setData(data: AnyObject, cb: () => void) {
-    const instance = wk.meta.instance;
-    wekit.pageEventEmitter.emit("setData", instance, data);
-    const _data = wk.meta.isPreOptimize ? (wk.meta.data as any) : instance.data;
+  function _setData(this: any, data: AnyObject, cb: () => void) {
+    wk.meta.instance = this;
+    wk.initData(this);
+    wekit.pageEventEmitter.emit("setData", this, data);
+    const _data = wk.meta.isPreOptimize ? (wk.meta.data as any) : this.data;
     for (const key in data) {
       const value = data[key];
       const [cKey] = setTargetValue(_data, key, value);
