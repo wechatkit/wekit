@@ -51,12 +51,6 @@ export class PerfReportPlugin implements Plugin {
 
     ctx.pageEventEmitter.on("flushView", (page: any) => {
       updatePagePerfReport(page);
-      console.log(
-        LOG_PREFIX,
-        `Page ${page.route} flushView time: ${
-          this.pagePerfReport[page.route].cost
-        }ms`
-      );
     });
 
     wx.onAppHide(this.reportHandler);
