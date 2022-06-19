@@ -50,10 +50,10 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     }
   });
 
-  // injectHookAfter(options, "onShow", (ctx: any) => {
-  //   wk.meta.instance = ctx;
-  //   wk.initData(ctx);
-  // });
+  injectHookAfter(options, "onShow", (ctx: any) => {
+    wk.meta.instance = ctx;
+    wk.initData(ctx);
+  });
 
   injectHookBefore(options, "onReady", () => {
     wk.meta.isReady = true;

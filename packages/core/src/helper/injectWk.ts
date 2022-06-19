@@ -77,6 +77,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       }
       if (!ctx.data || ctx.data !== wk.meta.data) {
         ctx.data = wk.meta.data;
+        ctx._data = wk.meta.data;
       }
     },
   };
