@@ -27,39 +27,29 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const _setData = injectSetDataHelper(options);
 
-  injectHookBefore(options, "onPreload", (ctx: any) => {
+  injectHookBefore(options, "onPreload", (ctx) => {
     wk.meta.instance = ctx;
     wk.initData(ctx);
   });
 
-  injectHookBefore(options, "onLoad", (ctx: any) => {
+  injectHookBefore(options, "onLoad", (ctx) => {
     wk.meta.isLoad = true;
-    wk.meta.instance = ctx;
-    wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
-    if (wk.meta.isPreOptimize) {
-      wk.initData(ctx);
-      // checkInstanceData(ctx, options);
-      const updateData = wk.meta.updateData;
-      wk.meta.updateData = {};
-      injectPropProxy(ctx, options);
-      wk.meta.rawSetData!(updateData);
-    } else {
-      (options as any).route = ctx.route; // 解决低版本问题
-      options.options = ctx.options; // 解决低版本问题
-      callPreload(ctx);
-    }
-  });
-
-  injectHookBefore(options, "onShow", (ctx: any) => {
-    wk.meta.instance = ctx;
     wk.initData(ctx);
+    wk.initWk(ctx);
   });
 
-  injectHookBefore(options, "onReady", () => {
+  injectHookBefore(options, "onShow", (ctx) => {
+    wk.initData(ctx);
+    wk.initWk(ctx);
+  });
+
+  injectHookBefore(options, "onReady", (ctx) => {
     wk.meta.isReady = true;
+    wk.initData(ctx);
+    wk.initWk(ctx);
   });
 
-  injectHookAfter(options, "onUnload", (ctx: any) => {
+  injectHookBefore(options, "onUnload", (ctx: any) => {
     setTimeout(() => {
       // 等所有异步任务完成后执行
       if (wk.meta.isPreOptimize) {
@@ -68,16 +58,18 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
         // });
         (options as any).data = null;
         ctx.data = null;
+        ctx._data = null;
         wk.meta.data = null;
       }
-      wk.meta.dyListener.forEach((item) => {
-        wekit.pageEventEmitter.off(item.event, item.handler);
-      });
-      wk.meta.dyListener = [];
+      wk.meta.isInitWk = false;
       wk.meta.isPreload = false;
       wk.meta.isLoad = false;
       wk.meta.isReady = false;
       wk.meta.rawSetData = null;
+      wk.meta.dyListener.forEach((item) => {
+        wekit.pageEventEmitter.off(item.event, item.handler);
+      });
+      wk.meta.dyListener = [];
     });
   });
 

@@ -14,7 +14,11 @@ export function injectPropProxy(target: any, proxy: any) {
   for (let i = 0; i < propKeys.length; i++) {
     const key: string = propKeys[i];
 
-    if (target[key] !== proxy[key]) {
+    if (
+      target[key] !== proxy[key] ||
+      target[key] === null ||
+      target[key] === undefined
+    ) {
       Object.defineProperty(target, key, {
         get() {
           return proxy[key];

@@ -1,5 +1,7 @@
-import { deepClone } from "@wekit/shared";
+import { deepClone, Log } from "@wekit/shared";
 import { Wekit } from "../core/Wekit";
+import { callPreload } from "./injectPreloadEvent";
+import { injectPropProxy } from "./injectPropProxy";
 
 export enum WkType {
   PAGE,
@@ -20,12 +22,14 @@ export interface WkMeta {
   instance: AnyObject;
   type: WkType;
   dyListener: { event: string; handler: AnyFunction }[];
-  isPreOptimize: false;
+  isPreOptimize: boolean;
+  isInitWk: boolean;
 }
 export interface Wk {
   meta: WkMeta;
   wait(event: string, callback?: AnyFunction): Promise<void>;
   initData(ctx: AnyObject): void;
+  initWk(ctx: AnyObject): void;
 }
 
 export function injectWk(options: AnyObject, type: WkType) {
@@ -51,6 +55,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       type,
       dyListener: [],
       isPreOptimize: false,
+      isInitWk: false,
     },
     wait(event: string, callback?: AnyFunction) {
       return new Promise((resolve) => {
@@ -78,6 +83,25 @@ export function injectWk(options: AnyObject, type: WkType) {
       if (!ctx.data || ctx.data !== wk.meta.data) {
         ctx.data = wk.meta.data;
         ctx._data = wk.meta.data;
+      }
+    },
+    initWk(ctx) {
+      if (wk.meta.isInitWk) {
+        return;
+      }
+      wk.meta.isInitWk = true;
+      wk.meta.instance = ctx;
+      wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
+      if (wk.meta.isPreOptimize) {
+        // checkInstanceData(ctx, options);
+        const updateData = wk.meta.updateData;
+        wk.meta.updateData = {};
+        injectPropProxy(ctx, options);
+        wk.meta.rawSetData!(updateData);
+      } else {
+        (options as any).route = ctx.route; // 解决低版本问题
+        options.options = ctx.options; // 解决低版本问题
+        callPreload(ctx);
       }
     },
   };
