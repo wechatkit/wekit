@@ -1,5 +1,13 @@
 # @wekit/plugin-perf-report
 
+## 1.1.5
+
+### Patch Changes
+
+- 去除打印
+- Updated dependencies
+  - @wekit/core@1.2.10
+
 ## 1.1.4
 
 ### Patch Changes

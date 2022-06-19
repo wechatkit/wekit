@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.10
+
+### Patch Changes
+
+- 修复 BUG
+
 ## 1.2.9
 
 ### Patch Changes
