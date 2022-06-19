@@ -30,7 +30,8 @@ export function injectSetDataHelper(options: any) {
 }
 
 function triggerFlush(wk: Wk) {
-  if (!wk.meta.rawSetData) {
+  const rawSetData = wk.meta.rawSetData;
+  if (!rawSetData) {
     return;
   }
   if (wk.meta.lock) {
@@ -43,7 +44,7 @@ function triggerFlush(wk: Wk) {
     const updateData = wk.meta.updateData;
     wk.meta.updateData = {};
     wekit.pageEventEmitter.emit("flushView", wk.meta.instance, updateData);
-    wk.meta.rawSetData!(updateData);
+    rawSetData!(updateData);
     wk.meta.lock = false;
   }
 }
