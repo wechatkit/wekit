@@ -14,8 +14,8 @@ export function injectSetDataHelper(options: any) {
     const _data = wk.meta.isPreOptimize ? (wk.meta.data as any) : this.data;
     for (const key in data) {
       const value = data[key];
-      const [cKey] = setTargetValue(_data, key, value);
-      wk.meta.updateData[cKey] = _data[cKey];
+      setTargetValue(_data, key, value);
+      wk.meta.updateData[key] = value;
     }
     cb && cb();
     triggerFlush(wk);
