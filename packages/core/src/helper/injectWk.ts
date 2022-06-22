@@ -97,7 +97,7 @@ export function injectWk(options: AnyObject, type: WkType) {
         const updateData = wk.meta.updateData;
         wk.meta.updateData = {};
         injectPropProxy(ctx, options);
-        wk.meta.rawSetData!(updateData);
+        ctx.setData!(updateData);
       } else {
         (options as any).route = ctx.route; // 解决低版本问题
         options.options = ctx.options; // 解决低版本问题
