@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.11
+
+### Patch Changes
+
+- 优化初次 setData 行为
+
 ## 1.2.10
 
 ### Patch Changes
