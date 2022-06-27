@@ -22,4 +22,6 @@
   </view>
   <button bindtap="toHelloPage">打开hello页</button>
   <button bindtap="addCount">我是数字{{count}}</button>
+  <minput model:value="{{inpVal}}"></minput>
+  <view>{{inpVal}}</view>
 </view>

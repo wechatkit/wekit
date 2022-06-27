@@ -1,0 +1,2 @@
+<!--pages/index/minput/minput.wxml-->
+<input type="text" value="{{value}}" bindinput="onInput"></input>

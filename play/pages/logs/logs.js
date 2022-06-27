@@ -5,6 +5,7 @@ const util = require("../../utils/util.js");
 module.exports = defPage({
   data: () => ({
     logs: [],
+    // inpVal: "x",
   }),
   onPreload() {
     console.log("onPreload", this.data.logs);
