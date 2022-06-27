@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.12
+
+### Patch Changes
+
+- fix: 修复某些情况下 data 指向问题
+
 ## 1.2.11
 
 ### Patch Changes
