@@ -54,7 +54,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
         //   (options as any)[key] = undefined;
         // });
         (options as any).data = null;
-        // ctx.data = null;
+        ctx.data = null;
         ctx._data = null;
         wk.meta.data = null;
       }

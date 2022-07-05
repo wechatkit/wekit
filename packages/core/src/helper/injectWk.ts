@@ -84,23 +84,10 @@ export function injectWk(options: AnyObject, type: WkType) {
       if (!wk.meta.data) {
         wk.meta.data = wk.meta.dataFactory.call(ctx) as any;
       }
-      if (options.data !== wk.meta.data) {
-        options.data = wk.meta.data;
-      }
 
-      if (ctx._data !== wk.meta.data) {
+      if (!ctx.data || ctx.data !== wk.meta.data) {
         ctx._data = wk.meta.data;
-      }
-
-      if (ctx.data !== ctx.__data__) {
-        Object.defineProperty(ctx, "data", {
-          get() {
-            return ctx.__data__;
-          },
-          set(v) {
-            ctx.__data__ = v;
-          },
-        });
+        ctx.data = wk.meta.data;
       }
     },
     initWk(ctx) {
