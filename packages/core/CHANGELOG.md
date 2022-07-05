@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.13
+
+### Patch Changes
+
+- fix: 修复 wait 问题
+
 ## 1.2.12
 
 ### Patch Changes
