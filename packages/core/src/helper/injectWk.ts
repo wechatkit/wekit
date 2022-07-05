@@ -97,6 +97,9 @@ export function injectWk(options: AnyObject, type: WkType) {
           get() {
             return ctx.__data__;
           },
+          set(v) {
+            ctx.__data__ = v;
+          },
         });
       }
     },
