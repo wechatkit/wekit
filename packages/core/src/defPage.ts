@@ -1,10 +1,7 @@
 import { Wekit } from "./core/Wekit";
 import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
-import { injectPropProxy } from "./helper/injectPropProxy";
 import { injectWk, WkType } from "./helper/injectWk";
-import { callPreload } from "./helper/injectPreloadEvent";
-import { checkInstanceData } from "./utils/checkInstanceData";
 
 export type DefPageOptions<TData, TCustom> = WechatMiniprogram.Page.Options<
   TData,
@@ -27,13 +24,13 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const _setData = injectSetDataHelper(options);
 
-  injectHookBefore(options, "onPreload", (ctx) => {
+  injectHookBefore(options, "onPreload", (ctx, opts) => {
     wk.meta.instance = ctx;
     wk.initData(ctx);
   });
 
-  injectHookBefore(options, "onLoad", (ctx) => {
-    wk.meta.isLoad = true;
+  injectHookBefore(options, "onLoad", (ctx, opts) => {
+    wk.lifecycle.onLoad = true;
     wk.initData(ctx);
     wk.initWk(ctx);
   });
@@ -44,12 +41,12 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   });
 
   injectHookBefore(options, "onReady", (ctx) => {
-    wk.meta.isReady = true;
+    wk.lifecycle.onReady = true;
     wk.initData(ctx);
     wk.initWk(ctx);
   });
 
-  injectHookBefore(options, "onUnload", (ctx: any) => {
+  injectHookAfter(options, "onUnload", (ctx: any) => {
     setTimeout(() => {
       // 等所有异步任务完成后执行
       if (wk.meta.isPreOptimize) {
@@ -57,27 +54,53 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
         //   (options as any)[key] = undefined;
         // });
         (options as any).data = null;
-        ctx.data = null;
+        // ctx.data = null;
         ctx._data = null;
         wk.meta.data = null;
       }
+      wk.lifecycle.onPreload = false;
+      wk.lifecycle.onLoad = false;
+      wk.lifecycle.onReady = false;
       wk.meta.isInitWk = false;
-      wk.meta.isPreload = false;
-      wk.meta.isLoad = false;
-      wk.meta.isReady = false;
       wk.meta.rawSetData = null;
       wk.meta.dyListener.forEach((item) => {
         wekit.pageEventEmitter.off(item.event, item.handler);
       });
       wk.meta.dyListener = [];
     });
+    wekit.pageEventEmitter.emit("onUnload", ctx);
   });
 
-  wekit.pageEventEmitter.emit("onInit", options);
+  multiBindPageHook(options, [
+    "onPreload",
+    "onLoad",
+    "onReady",
+    "onShow",
+    "onHide",
+    "onPullDownRefresh",
+    "onReachBottom",
+    "onShareAppMessage",
+    "onShareTimeline",
+    "onAddToFavorites",
+    "onPageScroll",
+    "onResize",
+    "onTabItemTap",
+    "onSaveExitState",
+  ]);
 
-  wekit.pageEventEmitter.bindListener(options);
+  wekit.pageEventEmitter.emit("onInit", options);
 
   Page(options);
 
   return options;
+}
+
+function multiBindPageHook(options: any, events: string[]) {
+  const wekit = Wekit.globalWekit;
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i];
+    injectHookAfter(options, event, (...args) => {
+      wekit.pageEventEmitter.emit(event, ...args);
+    });
+  }
 }

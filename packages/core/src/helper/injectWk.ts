@@ -9,9 +9,6 @@ export enum WkType {
 }
 
 export interface WkMeta {
-  isPreload: boolean;
-  isLoad: boolean;
-  isReady: boolean;
   updateData: AnyObject;
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
@@ -27,6 +24,11 @@ export interface WkMeta {
 }
 export interface Wk {
   meta: WkMeta;
+  lifecycle: {
+    onPreload: boolean;
+    onLoad: boolean;
+    onReady: boolean;
+  };
   wait(event: string, callback?: AnyFunction): Promise<void>;
   initData(ctx: AnyObject): void;
   initWk(ctx: AnyObject): void;
@@ -41,9 +43,6 @@ export function injectWk(options: AnyObject, type: WkType) {
 
   const wk: Wk = {
     meta: {
-      isPreload: false,
-      isLoad: false,
-      isReady: false,
       updateData: {},
       rawSetData: null,
       dataFactory,
@@ -57,9 +56,14 @@ export function injectWk(options: AnyObject, type: WkType) {
       isPreOptimize: false,
       isInitWk: false,
     },
+    lifecycle: {
+      onPreload: false,
+      onLoad: false,
+      onReady: false,
+    },
     wait(event: string, callback?: AnyFunction) {
       return new Promise((resolve) => {
-        if (wk.meta.isReady) {
+        if (wk.lifecycle[event as keyof typeof wk.lifecycle]) {
           callback && callback();
           resolve();
           return;

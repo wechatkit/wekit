@@ -62,7 +62,6 @@ export function defComponent<
   injectHookAfter<any>(options.lifetimes, "detached", function(ctx: any) {
     wk.meta.updateData = {};
     wk.meta.rawSetData = null;
-    wk.meta.isInitData = false;
     options.data = null as any;
     ctx.data = null;
   });
