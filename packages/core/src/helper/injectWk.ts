@@ -84,9 +84,20 @@ export function injectWk(options: AnyObject, type: WkType) {
       if (!wk.meta.data) {
         wk.meta.data = wk.meta.dataFactory.call(ctx) as any;
       }
-      if (!ctx.data || ctx.data !== wk.meta.data) {
-        // ctx.data = wk.meta.data;
+      if (options.data !== wk.meta.data) {
+        options.data = wk.meta.data;
+      }
+
+      if (ctx._data !== wk.meta.data) {
         ctx._data = wk.meta.data;
+      }
+
+      if (ctx.data !== ctx.__data__) {
+        Object.defineProperty(ctx, "data", {
+          get() {
+            return ctx.__data__;
+          },
+        });
       }
     },
     initWk(ctx) {
@@ -97,7 +108,6 @@ export function injectWk(options: AnyObject, type: WkType) {
       wk.meta.instance = ctx;
       wk.meta.rawSetData = ctx.constructor.prototype.setData.bind(ctx);
       if (wk.meta.isPreOptimize) {
-        // checkInstanceData(ctx, options);
         const updateData = wk.meta.updateData;
         wk.meta.updateData = {};
         injectPropProxy(ctx, options);
