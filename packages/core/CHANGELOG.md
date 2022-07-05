@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.15
+
+### Patch Changes
+
+- fix: 修复 data 问题
+
 ## 1.2.14
 
 ### Patch Changes
