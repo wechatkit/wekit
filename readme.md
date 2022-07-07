@@ -28,7 +28,7 @@ npm i @wekit/core
 
 ## 使用
 
-> 具体例子请查看 `packages/play` 文件夹
+> 具体例子请查看 `play` 文件夹
 
 ```js
 // app.js
