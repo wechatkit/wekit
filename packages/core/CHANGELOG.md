@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.16
+
+### Patch Changes
+
+- fix: 修复小程序的 swithTab 页的问题
+
 ## 1.2.15
 
 ### Patch Changes
