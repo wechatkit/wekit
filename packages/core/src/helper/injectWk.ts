@@ -28,10 +28,12 @@ export interface Wk {
     onPreload: boolean;
     onLoad: boolean;
     onReady: boolean;
+    onUnload: boolean;
   };
   wait(event: string, callback?: AnyFunction): Promise<void>;
   initData(ctx: AnyObject): void;
   initWk(ctx: AnyObject): void;
+  destroy(): void;
 }
 
 export function injectWk(options: AnyObject, type: WkType) {
@@ -60,6 +62,7 @@ export function injectWk(options: AnyObject, type: WkType) {
       onPreload: false,
       onLoad: false,
       onReady: false,
+      onUnload: true,
     },
     wait(event: string, callback?: AnyFunction) {
       return new Promise((resolve) => {
@@ -107,6 +110,28 @@ export function injectWk(options: AnyObject, type: WkType) {
         options.options = ctx.options; // 解决低版本问题
         callPreload(ctx);
       }
+    },
+    destroy() {
+      const ctx = wk.meta.instance;
+      if (wk.meta.isPreOptimize) {
+        // wk.meta.cachePropKeys.forEach((key) => {
+        //   (options as any)[key] = undefined;
+        // });
+        (options as any).data = null;
+        ctx.data = null;
+        ctx._data = null;
+        wk.meta.data = null;
+        wk.meta.isInitWk = false;
+        wk.meta.rawSetData = null;
+        wk.meta.dyListener.forEach((item) => {
+          wekit.pageEventEmitter.off(item.event, item.handler);
+        });
+        wk.meta.dyListener = [];
+      }
+      wk.lifecycle.onPreload = false;
+      wk.lifecycle.onLoad = false;
+      wk.lifecycle.onReady = false;
+      wk.lifecycle.onUnload = true;
     },
   };
 

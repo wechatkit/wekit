@@ -23,10 +23,14 @@ export function injectPreloadEvent(type: any) {
 export function callPreload(ctx: any) {
   const wk = getWk(ctx);
   try {
+    if (!wk.lifecycle.onUnload) {
+      wk.destroy();
+    }
     if (wk.lifecycle.onPreload) {
       return false;
     }
     Log.info("load", ctx.route);
+    wk.lifecycle.onUnload = false;
     wk.lifecycle.onPreload = true;
     ctx.onPreload.call(ctx, ctx.options);
   } catch (error) {
