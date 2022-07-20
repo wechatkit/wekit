@@ -121,13 +121,13 @@ export function injectWk(options: AnyObject, type: WkType) {
         ctx.data = null;
         ctx._data = null;
         wk.meta.data = null;
-        wk.meta.isInitWk = false;
         wk.meta.rawSetData = null;
         wk.meta.dyListener.forEach((item) => {
           wekit.pageEventEmitter.off(item.event, item.handler);
         });
         wk.meta.dyListener = [];
       }
+      wk.meta.isInitWk = false;
       wk.lifecycle.onPreload = false;
       wk.lifecycle.onLoad = false;
       wk.lifecycle.onReady = false;

@@ -3,6 +3,7 @@ import { Log } from "@wekit/shared";
 import { queryParse } from "@wekit/shared";
 import { Wekit } from "../core/Wekit";
 import { getWk } from "../utils/getWk";
+import { Wk } from "./injectWk";
 
 export function injectPreloadEvent(type: any) {
   const wekit = Wekit.globalWekit;
@@ -10,7 +11,10 @@ export function injectPreloadEvent(type: any) {
     let [path, query] = opts.url.split("?");
     wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
-        const wk = ctx.__wk__();
+        const wk: Wk = ctx.__wk__();
+        if (wk.meta.isInitWk) {
+          return;
+        }
         wk.meta.isPreOptimize = true;
         ctx.options = queryParse(query);
         ctx.route = path.substring(1);
