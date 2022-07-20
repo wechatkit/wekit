@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.17
+
+### Patch Changes
+
+- 0101394: fix(core): 修复在 iphone8 第一次打开页面的时候加载两次 onPPreloa 的问题
+
 ## 1.2.16
 
 ### Patch Changes
