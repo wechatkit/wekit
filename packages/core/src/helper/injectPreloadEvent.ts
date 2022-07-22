@@ -12,9 +12,6 @@ export function injectPreloadEvent(type: any) {
     wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
         const wk: Wk = ctx.__wk__();
-        if (wk.meta.isInitWk) {
-          return;
-        }
         wk.meta.isPreOptimize = true;
         ctx.options = queryParse(query);
         ctx.route = path.substring(1);
