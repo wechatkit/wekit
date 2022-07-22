@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.18
+
+### Patch Changes
+
+- fix(core): 在极端情况下 switchTab 页的 onPreload 不触发的问题
+
 ## 1.2.17
 
 ### Patch Changes
