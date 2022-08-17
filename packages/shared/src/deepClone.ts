@@ -1,4 +1,7 @@
 export function deepClone<T extends AnyObject>(data: T): T {
+  if (!data) {
+    return data;
+  }
   if (Array.isArray(data)) {
     return (data.map((item) => deepClone(item)) as unknown) as T;
   }

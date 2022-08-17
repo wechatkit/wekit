@@ -62,9 +62,12 @@ describe("deepClone.ts", () => {
     };
     expect(deepClone(objDate)).not.toBe(objDate);
     expect(deepClone(objDate)).toMatchInlineSnapshot(`
-      Object {
-        "date": 2019-12-31T16:00:00.000Z,
-      }
-    `);
+          Object {
+            "date": 2019-12-31T16:00:00.000Z,
+          }
+        `);
+    expect(deepClone((null as unknown) as AnyObject)).toMatchInlineSnapshot(
+      `null`
+    );
   });
 });
