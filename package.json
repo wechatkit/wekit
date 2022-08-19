@@ -8,7 +8,7 @@
     "build": " pnpm rollup -c rollup.config.ts --pack-name ",
     "build:all": "pnpm build shared && pnpm build core && pnpm build plugin-console && pnpm build plugin-perf-report",
     "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --inspect-brk\" jest",
-    "version": "pnpm build:all"
+    "publish": "pnpm build:all"
   },
   "keywords": [],
   "author": "",
