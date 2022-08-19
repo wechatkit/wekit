@@ -44,7 +44,9 @@ function triggerFlush(wk: Wk) {
     const updateData = wk.meta.updateData;
     wk.meta.updateData = {};
     wekit.pageEventEmitter.emit("flushView", wk.meta.instance, updateData);
-    rawSetData!(updateData);
+    rawSetData!(updateData, () => {
+      wekit.pageEventEmitter.emit("flushViewed", wk.meta.instance, updateData);
+    });
     wk.meta.lock = false;
   }
 }
