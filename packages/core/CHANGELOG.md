@@ -1,5 +1,13 @@
 # @wekit/core
 
+## 1.2.19
+
+### Patch Changes
+
+- feat: 新增事件钩子
+- Updated dependencies
+  - @wekit/shared@1.1.4
+
 ## 1.2.18
 
 ### Patch Changes
