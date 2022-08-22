@@ -40,7 +40,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@wekit/shared': workspace:^1.1.3
+      '@wekit/shared': workspace:^1.1.4
     dependencies:
       '@wekit/shared': link:../shared
 
