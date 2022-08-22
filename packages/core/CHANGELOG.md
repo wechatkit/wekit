@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.2.20
+
+### Patch Changes
+
+- feat: 为 flushViewed 事件增加时间计算
+
 ## 1.2.19
 
 ### Patch Changes
