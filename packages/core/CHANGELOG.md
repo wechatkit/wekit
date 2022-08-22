@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.3.0
+
+### Minor Changes
+
+- feat: wait 返回页面实例
+
 ## 1.2.20
 
 ### Patch Changes
