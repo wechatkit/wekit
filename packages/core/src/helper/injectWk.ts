@@ -30,7 +30,7 @@ export interface Wk {
     onReady: boolean;
     onUnload: boolean;
   };
-  wait(event: string, callback?: AnyFunction): Promise<void>;
+  wait(event: string, callback?: AnyFunction): Promise<any>;
   initData(ctx: AnyObject): void;
   initWk(ctx: AnyObject): void;
   destroy(): void;
@@ -67,13 +67,13 @@ export function injectWk(options: AnyObject, type: WkType) {
     wait(event: string, callback?: AnyFunction) {
       return new Promise((resolve) => {
         if (wk.lifecycle[event as keyof typeof wk.lifecycle]) {
-          callback && callback();
-          resolve();
+          callback && callback(wk.meta.instance);
+          resolve(wk.meta.instance);
           return;
         }
-        const handler = () => {
-          callback && callback();
-          resolve();
+        const handler = (ctx: any) => {
+          callback && callback(ctx);
+          resolve(ctx);
         };
         wk.meta.dyListener.push({ event, handler });
         wekit.pageEventEmitter.on(event, handler);
@@ -111,6 +111,7 @@ export function injectWk(options: AnyObject, type: WkType) {
         callPreload(ctx);
       }
     },
+
     destroy() {
       const ctx = wk.meta.instance;
       if (wk.meta.isPreOptimize) {
