@@ -40,12 +40,18 @@ function triggerFlush(wk: Wk) {
   wk.meta.lock = true;
   wx.nextTick(flushView);
   function flushView() {
+    const updateTime = Date.now();
     const wekit = Wekit.globalWekit;
     const updateData = wk.meta.updateData;
     wk.meta.updateData = {};
     wekit.pageEventEmitter.emit("flushView", wk.meta.instance, updateData);
     rawSetData!(updateData, () => {
-      wekit.pageEventEmitter.emit("flushViewed", wk.meta.instance, updateData);
+      wekit.pageEventEmitter.emit(
+        "flushViewed",
+        wk.meta.instance,
+        updateData,
+        Date.now() - updateTime
+      );
     });
     wk.meta.lock = false;
   }
