@@ -18,7 +18,10 @@ export class Wekit {
   }
 
   require(path: string, cb: (mod: any) => any) {
-    path = calcRelativePath(getCurrentPage().is, path);
+    const curPage = getCurrentPage();
+    if(curPage){
+      path = calcRelativePath(curPage.is, path);
+    }
     try {
       Log.info(path, "require");
       return this._require(path, cb);
