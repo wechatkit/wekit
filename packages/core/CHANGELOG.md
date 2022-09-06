@@ -1,5 +1,13 @@
 # @wekit/core
 
+## 1.3.1
+
+### Patch Changes
+
+- fix: 修复可能发生的错误
+- Updated dependencies
+  - @wekit/shared@1.1.5
+
 ## 1.3.0
 
 ### Minor Changes

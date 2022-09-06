@@ -1,5 +1,11 @@
 # @wekit/shared
 
+## 1.1.5
+
+### Patch Changes
+
+- fix: 修复可能发生的错误
+
 ## 1.1.4
 
 ### Patch Changes
