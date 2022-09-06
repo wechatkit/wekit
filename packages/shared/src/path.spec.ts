@@ -10,7 +10,8 @@ describe('path.ts', () => {
     expect(calcRelativePath('/pages/index/index', '/pages/index/index.wxs')).toBe('/pages/index/index.wxs');
     expect(calcRelativePath('/pages/teacher/teacher', '../index/index.wxs')).toBe('/pages/index/index.wxs');
     expect(calcRelativePath('', '../index/index.wxs')).toBe('index/index.wxs');
+    expect(calcRelativePath('', 'index/index.wxs')).toBe('/index/index.wxs');
     expect(calcRelativePath('', '/index/index.wxs')).toBe('/index/index.wxs');
-    expect(calcRelativePath('/pages/teacher/index', '')).toBe('/pages/teacher/index');
+    expect(calcRelativePath('/pages/teacher/index', '')).toBe('/pages/teacher/');
   });
 });
