@@ -3,11 +3,11 @@ import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
 import { injectWk, WkType } from "./helper/injectWk";
 
-export type DefPageOptions<TData, TCustom> = WechatMiniprogram.Page.Options<
+export type DefPageOptions<TData extends AnyObject, TCustom extends AnyObject> = WechatMiniprogram.Page.Options<
   TData,
   TCustom
 > & {
-  data: () => TData;
+  data: (() => TData) | TData;
   onPreload?: (
     options: Record<string, string | undefined>
   ) => void | Promise<void>;
