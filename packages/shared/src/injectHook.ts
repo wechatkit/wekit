@@ -30,7 +30,7 @@ export function injectHookBefore<T>(
     }
 
     try {
-      res = _method.apply(this, args);
+      res = _method && _method.apply(this, args);
     } catch (error) {
       err = error;
     }
@@ -76,7 +76,7 @@ export function injectHookAfter<T>(
     let err = null;
 
     try {
-      res = _method.apply(this, args);
+      res = _method && _method.apply(this, args);
     } catch (error) {
       err = error;
     }
