@@ -1,3 +1,4 @@
+import json from "@rollup/plugin-json";
 import { swc, defineRollupSwcOption } from "rollup-plugin-swc3";
 import { defineConfig } from "rollup";
 import { Command } from "commander";
@@ -29,6 +30,7 @@ export default defineConfig({
     },
   ],
   plugins: [
+    json(),
     swc(
       defineRollupSwcOption({
         tsconfig: "tsconfig.json",

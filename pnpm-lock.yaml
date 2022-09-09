@@ -6,6 +6,7 @@ importers:
     specifiers:
       '@changesets/cli': ^2.23.0
       '@jest/globals': ^28.1.1
+      '@rollup/plugin-json': ^4.1.0
       '@swc/core': ^1.2.149
       '@swc/helpers': ^0.3.6
       '@swc/jest': ^0.2.20
@@ -23,6 +24,7 @@ importers:
     devDependencies:
       '@changesets/cli': 2.23.0
       '@jest/globals': 28.1.1
+      '@rollup/plugin-json': registry.npmjs.org/@rollup/plugin-json/4.1.0_rollup@2.69.2
       '@swc/core': 1.2.149
       '@swc/helpers': 0.3.6
       '@swc/jest': 0.2.20_@swc+core@1.2.149
@@ -4420,6 +4422,33 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  registry.npmjs.org/@rollup/plugin-json/4.1.0_rollup@2.69.2:
+    resolution: {integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@rollup/plugin-json/-/plugin-json-4.1.0.tgz}
+    id: registry.npmjs.org/@rollup/plugin-json/4.1.0
+    name: '@rollup/plugin-json'
+    version: 4.1.0
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': registry.npmjs.org/@rollup/pluginutils/3.1.0_rollup@2.69.2
+      rollup: 2.69.2
+    dev: true
+
+  registry.npmjs.org/@rollup/pluginutils/3.1.0_rollup@2.69.2:
+    resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-3.1.0.tgz}
+    id: registry.npmjs.org/@rollup/pluginutils/3.1.0
+    name: '@rollup/pluginutils'
+    version: 3.1.0
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    dependencies:
+      '@types/estree': registry.npmjs.org/@types/estree/0.0.39
+      estree-walker: registry.npmjs.org/estree-walker/1.0.1
+      picomatch: registry.npmjs.org/picomatch/2.3.1
+      rollup: 2.69.2
+    dev: true
+
   registry.npmjs.org/@swc/core-android-arm-eabi/1.2.149:
     resolution: {integrity: sha512-kiPgZL+bBIvXRRWeAM6ag+Bi0pNNbgt6TOKF5jRkIGnFP7Jd9ZXvDX57m+dUCKD85ZtAQfIg8h4WZy6k2l2miA==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@swc/core-android-arm-eabi/-/core-android-arm-eabi-1.2.149.tgz}
     name: '@swc/core-android-arm-eabi'
@@ -4563,6 +4592,18 @@ packages:
     dev: true
     optional: true
 
+  registry.npmjs.org/@types/estree/0.0.39:
+    resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz}
+    name: '@types/estree'
+    version: 0.0.39
+    dev: true
+
+  registry.npmjs.org/estree-walker/1.0.1:
+    resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/estree-walker/-/estree-walker-1.0.1.tgz}
+    name: estree-walker
+    version: 1.0.1
+    dev: true
+
   registry.npmjs.org/fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz}
     name: fsevents
@@ -4580,6 +4621,13 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmjs.org/picomatch/2.3.1:
+    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz}
+    name: picomatch
+    version: 2.3.1
+    engines: {node: '>=8.6'}
+    dev: true
 
   registry.npmjs.org/source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==, registry: https://registry.yarnpkg.com/, tarball: https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz}

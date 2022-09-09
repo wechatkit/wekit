@@ -6,7 +6,8 @@
     "target": "es2015",
     "strict": true,
     "importHelpers": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true
   },
   "include": ["packages/*/src"]
 }
