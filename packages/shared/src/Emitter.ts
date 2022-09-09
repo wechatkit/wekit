@@ -18,6 +18,16 @@ export class Emitter {
     return this;
   }
 
+  once<E = AnyObject>(event: string, eventCb: E) {
+    const onceHandler = (...args: any[]) => {
+      if (typeof eventCb === "function") {
+        eventCb(...args);
+      }
+      this.off(event, onceHandler);
+    };
+    this.on(event, onceHandler);
+  }
+
   off<E = AnyObject>(event: string | E, eventCb: E) {
     const events = this.eventMap.get(event);
     if (events) {
