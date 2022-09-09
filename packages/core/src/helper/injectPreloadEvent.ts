@@ -2,17 +2,25 @@ import { injectHookBefore } from "@wekit/shared";
 import { Log } from "@wekit/shared";
 import { queryParse } from "@wekit/shared";
 import { Wekit } from "../core/Wekit";
-import { Wk } from "../core/Wk";
+import { WK, Wk } from "../core/Wk";
 
 export function injectPreloadEvent(type: any) {
   const wekit = Wekit.globalWekit;
   injectHookBefore(wx, type, function(_, opts) {
     let [path, query] = opts.url.split("?");
+    const route = path.substring(1);
+    const wk = Wk.defPageOptionMap.get(route);
+    if (wk) {
+      const mod = wk.options;
+      if (query) mod.options = queryParse(query);
+      mod.route = route;
+      return callPreload(mod);
+    }
     wekit.require(path, (mod) => {
       wekit.wxSupport.requireCb = true;
-      if (mod && mod.__wk__) {
+      if (mod && Wk.get(mod)) {
         if (query) mod.options = queryParse(query);
-        mod.route = path.substring(1);
+        mod.route = route;
         callPreload(mod);
       }
     });
@@ -26,7 +34,7 @@ export function callPreload(ctx: any) {
       return false;
     }
     wk.lifecycle.set("onPreload", true);
-    Log.info("load", ctx.route);
+    Log.info("onPreload", ctx.route);
     ctx.onPreload && ctx.onPreload.call(null, ctx.options);
   } catch (error) {
     Log.error(ctx.route, "onPreload call", error);

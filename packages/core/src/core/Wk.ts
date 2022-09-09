@@ -45,6 +45,10 @@ export class Wk {
     this.ctx = ctx;
     this.rawSetData = ctx.setData.bind(ctx);
 
+    if (ctx.route && !Wk.defPageOptionMap.has(ctx.route)) {
+      Wk.defPageOptionMap.set(ctx.route, this);
+    }
+
     injectSetDataHelper(ctx);
     injectGlobalMethod(ctx);
   }
@@ -67,8 +71,16 @@ export class Wk {
   }
 
   static get(ctx: any): Wk {
+    if (!ctx) {
+      return ctx;
+    }
+    if (!ctx[WK]) {
+      return ctx;
+    }
     return ctx[WK]();
   }
+
+  static defPageOptionMap = new Map<string, any>();
 }
 
 function injectGlobalMethod(ctx: any) {

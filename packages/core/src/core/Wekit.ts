@@ -5,6 +5,7 @@ import { defPage } from "../defPage";
 import { injectPreloadEvent } from "../helper/injectPreloadEvent";
 import { defComponent } from "../defComponent";
 import { version } from "../../package.json";
+import { Wk } from "./Wk";
 
 export class Wekit {
   private pluginManager = new PluginManager(this);
@@ -67,6 +68,15 @@ export class Wekit {
       enumerable: true,
     });
 
+    Object.defineProperty(wx, "Wekit", {
+      value: Wekit,
+      writable: false,
+      configurable: false,
+      enumerable: true,
+    });
+
     return wekit;
   }
+
+  static Wk = Wk;
 }
