@@ -3,6 +3,10 @@ export function queryParse(query = "") {
     return {};
   }
 
+  if (!query) {
+    return {};
+  }
+
   return query.split("&").reduce((result: any, param) => {
     const [key, value] = param.split("=");
     result[key] = decodeURIComponent(value);
