@@ -2,22 +2,43 @@
   "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
-    "pages/hello/hello"
+    "pages/test-main-page/test-main-page"
   ],
   "preloadRule": {
     "pages/index/index": {
       "network": "all",
       "packages": [
-        "logs"
+        "test-preload-page"
       ]
     }
   },
   "subPackages": [
     {
-      "name": "logs",
-      "root": "pages/logs",
+      "name": "test-async-page",
+      "root": "pages/test-async-page",
       "pages": [
-        "logs"
+        "test-async-page"
+      ]
+    },
+    {
+      "name": "test-preload-page",
+      "root": "pages/test-preload-page",
+      "pages": [
+        "test-preload-page"
+      ]
+    },
+    {
+      "name": "test-setdata",
+      "root": "pages/test-setdata",
+      "pages": [
+        "test-setdata"
+      ]
+    },
+    {
+      "name": "test-component",
+      "root": "pages/test-component",
+      "pages": [
+        "test-component"
       ]
     }
   ],

@@ -1,24 +1,18 @@
-const { defPage } = require("@wekit/core")
-
-// pages/hello/hello.js
-let lock = false
-module.exports = defPage({
+// pages/test-setdata/test-async-page.js
+Page({
 
   /**
    * 页面的初始数据
    */
-  data: ()=>({
-    a:1
-  }),
+  data: {
 
-  onPreload(){
-    console.log('onPreload', Date.now())
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('onLoad', Date.now())
+
   },
 
   /**
