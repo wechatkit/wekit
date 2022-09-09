@@ -1,4 +1,6 @@
 <!--index.wxml-->
 <view class="container" bindtap="onNav">
   <button style="width: 100%;" data-page="test-main-page">测试主包页面的生命周期事件</button>
+  <button style="width: 100%;" data-page="test-async-page">测试分包页面的生命周期事件</button>
+  <button style="width: 100%;" data-page="test-preload-page">测试预加载页面的生命周期事件</button>
 </view>

@@ -1,5 +1,15 @@
 // pages/test-async-page/test-async-page.js
-Page({
+import { defPage } from "@wekit/core";
+import { expect, Test } from "../../testlib";
+
+let t = 0;
+const test = new Test('pages/test-async-page/test-async-page.js');
+
+let testReq = [];
+const expectOnPreload = test.it('测试 onPreload 是否执行')
+const expectBeforeOnload = test.it('测试 onPreload 在 onLoad 之前执行')
+
+module.exports = defPage({
 
   /**
    * 页面的初始数据
@@ -8,11 +18,20 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  onPreload(){
+    t = Date.now();
+    console.log('onPreload', Date.now());
+    testReq.push('preload')
+    expectOnPreload();
+  },
 
+  onLoad(){
+    console.log('onLoad', Date.now(), Date.now() - t);
+    test.run();
+    testReq.push('load')
+    expectBeforeOnload(()=>{
+      expect(testReq).toEqual(['preload', 'load']);
+    })
   },
 
   /**
@@ -40,7 +59,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    test.recover();
+    testReq = [];
   },
 
   /**

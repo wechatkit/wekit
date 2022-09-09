@@ -1,2 +1,4 @@
 <!--pages/test-preload-page/test-preload-page.wxml-->
 <text>pages/test-preload-page/test-preload-page.wxml</text>
+
+<view style="width: 100px;height: 100px;background: red;"></view>

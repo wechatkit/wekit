@@ -37,6 +37,13 @@ export class Test {
     }
   }
 
+  async recover(){
+    for (let index = 0; index < this.its.length; index++) {
+      const it = this.its[index];
+      it.status = 'norun';
+    }
+  }
+
   async run(){
     await Promise.all(this.its.map(item => item.finish));
     console.log(`%c [Testlib] BEGIN ${this.desc} `, 'color:black;background: white');
