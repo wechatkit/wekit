@@ -1,9 +1,24 @@
 {
+  "debug": true,
   "entryPagePath": "pages/index/index",
   "pages": [
     "pages/index/index",
-    "pages/test-main-page/test-main-page"
+    "pages/test-main-page/test-main-page",
+    "pages/test-tabbar/tab1",
+    "pages/test-tabbar/tab2"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "text": "Tab1",
+        "pagePath": "pages/test-tabbar/tab1"
+      },
+      {
+        "text": "Tab2",
+        "pagePath": "pages/test-tabbar/tab2"
+      }
+    ]
+  },
   "preloadRule": {
     "pages/index/index": {
       "network": "all",

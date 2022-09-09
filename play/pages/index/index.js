@@ -19,10 +19,10 @@ module.exports = defPage({
   },
 
   onNav(e){
-    const { page } = e.target.dataset;
+    const { page, type = 'navigateTo' } = e.target.dataset;
     console.log(page)
-    wx.navigateTo({
-      url: `/pages/${page}/${page}`,
+    wx[type]({
+      url: `/pages/${page}`,
     })
   },
 
