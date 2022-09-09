@@ -4,6 +4,7 @@ import { calcRelativePath, Emitter, getCurrentPage, Log } from "@wekit/shared";
 import { defPage } from "../defPage";
 import { injectPreloadEvent } from "../helper/injectPreloadEvent";
 import { defComponent } from "../defComponent";
+import { version } from "../../package.json";
 
 export class Wekit {
   private pluginManager = new PluginManager(this);
@@ -12,6 +13,10 @@ export class Wekit {
   readonly componentEventEmitter = new Emitter();
   private _require!: (path: string, cb: (mod: any) => any) => any;
 
+  public wxSupport = {
+    requireCb: false,
+  };
+
   constructor(private options: WekitOptions) {
     this.pluginManager.installPlugins(options.plugins || []);
     this._require = options.config.require;
@@ -19,7 +24,7 @@ export class Wekit {
 
   require(path: string, cb: (mod: any) => any) {
     const curPage = getCurrentPage();
-    if(curPage){
+    if (curPage) {
       path = calcRelativePath(curPage.is, path);
     }
     try {
@@ -33,6 +38,8 @@ export class Wekit {
   destroy() {
     this.pluginManager.destroy();
   }
+
+  static version = version;
 
   static globalWekit: Wekit;
 

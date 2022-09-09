@@ -1,26 +1,22 @@
 import { Wekit } from "../core/Wekit";
 import { setTargetValue } from "@wekit/shared";
-import { Wk } from "./injectWk";
-import { getWk } from "../utils/getWk";
+import { Wk } from "../core/Wk";
 
-export function injectSetDataHelper(options: any) {
+export function injectSetDataHelper(ctx: any) {
   // 暂时不适配defComponent
   const wekit = Wekit.globalWekit;
-  const wk = getWk(options);
+  const wk = Wk.get(ctx);
   function _setData(this: any, data: AnyObject, cb: () => void) {
-    wk.meta.instance = this;
-    wk.initData(this);
     wekit.pageEventEmitter.emit("setData", this, data);
-    const _data = wk.meta.isPreOptimize ? (wk.meta.data as any) : this.data;
     for (const key in data) {
       const value = data[key];
-      setTargetValue(_data, key, value);
-      wk.meta.updateData[key] = value;
+      setTargetValue(this.data, key, value);
+      wk.updateData[key] = value;
     }
-    cb && cb();
+    if (cb && typeof cb === "function") wk.updateCallbacks.push(cb);
     triggerFlush(wk);
   }
-  Object.defineProperty(options, "setData", {
+  Object.defineProperty(ctx, "setData", {
     value: _setData,
     writable: true,
     enumerable: true,
@@ -30,29 +26,32 @@ export function injectSetDataHelper(options: any) {
 }
 
 function triggerFlush(wk: Wk) {
-  const rawSetData = wk.meta.rawSetData;
+  const rawSetData = wk.rawSetData;
   if (!rawSetData) {
     return;
   }
-  if (wk.meta.lock) {
+  if (wk.lock) {
     return;
   }
-  wk.meta.lock = true;
+  wk.lock = true;
   wx.nextTick(flushView);
   function flushView() {
     const updateTime = Date.now();
     const wekit = Wekit.globalWekit;
-    const updateData = wk.meta.updateData;
-    wk.meta.updateData = {};
-    wekit.pageEventEmitter.emit("flushView", wk.meta.instance, updateData);
+    const updateData = wk.updateData;
+    wk.updateData = {};
+
+    wekit.pageEventEmitter.emit("flushView", wk.ctx, updateData);
     rawSetData!(updateData, () => {
       wekit.pageEventEmitter.emit(
         "flushViewed",
-        wk.meta.instance,
+        wk.ctx,
         updateData,
         Date.now() - updateTime
       );
+      wk.updateCallbacks.forEach((cb) => cb());
+      wk.updateCallbacks = [];
     });
-    wk.meta.lock = false;
+    wk.lock = false;
   }
 }

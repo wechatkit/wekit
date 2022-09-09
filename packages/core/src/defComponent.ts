@@ -1,8 +1,6 @@
 import { injectHookBefore, injectHookAfter } from "@wekit/shared";
 import { Wekit } from "./core/Wekit";
-import { injectPropProxy } from "./helper/injectPropProxy";
-import { injectSetDataHelper } from "./helper/injectSetdataHelper";
-import { injectWk, WkType } from "./helper/injectWk";
+import { Wk } from "./core/Wk";
 
 export type DefComponentOptions<
   TData extends WechatMiniprogram.Component.DataOption,
@@ -35,40 +33,60 @@ export function defComponent<
 ) {
   const wekit = Wekit.globalWekit;
 
-  const wk = injectWk(options, WkType.COMPONENT);
+  options.lifetimes = options.lifetimes || {};
 
-  options.data = wk.meta.dataFactory.call(options) as any;
+  const wk = new Wk(options);
 
-  const _setData = injectSetDataHelper(options);
-
-  wekit.componentEventEmitter.emit("onInit", options);
-
-  injectHookBefore<any>(options.lifetimes, "attached", function(ctx: any) {
-    injectPropProxy(ctx, options);
-    ctx.data = options.data;
-    ctx.__data__ = options.data;
-    const updateData = wk.meta.updateData;
-    wk.meta.updateData = {};
-    ctx.setData(updateData);
-    wk.meta.rawSetData = ctx.setData.bind(ctx);
-    Object.defineProperty(ctx, "setData", {
-      value: _setData,
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    });
+  injectHookBefore(options.lifetimes, "created", (ctx, opts) => {
+    wk.lifecycle.set("created", true);
+    wk.load(ctx);
   });
 
-  injectHookAfter<any>(options.lifetimes, "detached", function(ctx: any) {
-    wk.meta.updateData = {};
-    wk.meta.rawSetData = null;
-    options.data = null as any;
-    ctx.data = null;
+  injectHookBefore(options.lifetimes, "attached", (ctx) => {
+    wk.lifecycle.set("detached", false);
+    wk.lifecycle.set("attached", true);
+  });
+  injectHookBefore(options.lifetimes, "ready", (ctx) => {
+    wk.lifecycle.set("ready", true);
   });
 
-  wekit.componentEventEmitter.bindListener(options);
+  injectHookBefore(options.lifetimes, "moved", (ctx) => {
+    wk.lifecycle.set("moved", true);
+  });
 
+  injectHookAfter(options.lifetimes, "detached", (ctx: any) => {
+    wk.lifecycle.set("detached", true);
+    wk.unload();
+  });
+
+  multiBindPageHook(options, [
+    "onPreload",
+    "onLoad",
+    "onReady",
+    "onShow",
+    "onHide",
+    "onPullDownRefresh",
+    "onReachBottom",
+    "onShareAppMessage",
+    "onShareTimeline",
+    "onAddToFavorites",
+    "onPageScroll",
+    "onResize",
+    "onTabItemTap",
+    "onSaveExitState",
+  ]);
+
+  wekit.pageEventEmitter.emit("onCreate", options);
   Component(options);
-
   return options;
+}
+
+function multiBindPageHook(options: any, events: string[]) {
+  const wekit = Wekit.globalWekit;
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i];
+    injectHookAfter(options, event, (...args) => {
+      wekit.pageEventEmitter.emit(event, ...args);
+    });
+  }
 }
