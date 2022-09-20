@@ -1,2 +1,3 @@
 <!--pages/test-tabbar/tab2.wxml-->
 <text>pages/test-tabbar/tab2.wxml</text>
+<button bindtap="onBack">跳回</button>

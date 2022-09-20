@@ -15,6 +15,13 @@ module.exports = defPage({
 
   },
 
+  onBack(){
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
+  },
+
+
   onPreload,
 
   /**
