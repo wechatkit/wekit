@@ -1,6 +1,7 @@
 import { injectHookBefore, injectHookAfter } from "@wekit/shared";
 import { Wekit } from "./core/Wekit";
 import { Wk } from "./core/Wk";
+import { multiBindPageHook } from "./utils/multiBindPageHook";
 
 export type DefComponentOptions<
   TData extends WechatMiniprogram.Component.DataOption,
@@ -59,34 +60,15 @@ export function defComponent<
     wk.unload();
   });
 
-  multiBindPageHook(options, [
-    "onPreload",
-    "onLoad",
-    "onReady",
-    "onShow",
-    "onHide",
-    "onPullDownRefresh",
-    "onReachBottom",
-    "onShareAppMessage",
-    "onShareTimeline",
-    "onAddToFavorites",
-    "onPageScroll",
-    "onResize",
-    "onTabItemTap",
-    "onSaveExitState",
+  multiBindPageHook(options.lifetimes, [
+    "created",
+    "attached",
+    "ready",
+    "moved",
+    "detached",
   ]);
 
-  wekit.pageEventEmitter.emit("onCreate", options);
+  wekit.pageEventEmitter.emit("onInit", options);
   Component(options);
   return options;
-}
-
-function multiBindPageHook(options: any, events: string[]) {
-  const wekit = Wekit.globalWekit;
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    injectHookAfter(options, event, (...args) => {
-      wekit.pageEventEmitter.emit(event, ...args);
-    });
-  }
 }

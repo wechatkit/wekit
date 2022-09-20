@@ -3,6 +3,7 @@ import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { Wk } from "./core/Wk";
 import { callPreload } from "./helper/injectPreloadEvent";
 import { defProp } from "./utils/defProp";
+import { multiBindPageHook } from "./utils/multiBindPageHook";
 
 export type DefPageOptions<
   TData extends AnyObject,
@@ -19,10 +20,6 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   const wekit = Wekit.globalWekit;
 
   const wk = new Wk(options);
-
-  defProp(options, "$getSelf", function $getInstance() {
-    return wk.wait("onLoad");
-  });
 
   injectHookBefore(options, "onLoad", (ctx, opts) => {
     wk.lifecycle.set("onUnload", false);
@@ -63,17 +60,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     "onSaveExitState",
   ]);
 
-  wekit.pageEventEmitter.emit("onCreate", options);
+  wekit.pageEventEmitter.emit("onInit", options);
   Page(options);
   return options;
-}
-
-function multiBindPageHook(options: any, events: string[]) {
-  const wekit = Wekit.globalWekit;
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    injectHookAfter(options, event, (...args) => {
-      wekit.pageEventEmitter.emit(event, ...args);
-    });
-  }
 }

@@ -36,6 +36,10 @@ export class Wk {
     });
   }
 
+  getSelf() {
+    return this.wait("onLoad");
+  }
+
   load(ctx: any) {
     this.unloaded = false;
     if (this.loaded) {
@@ -45,12 +49,18 @@ export class Wk {
     this.ctx = ctx;
     this.rawSetData = ctx.setData.bind(ctx);
 
-    if (ctx.route && !Wk.defPageOptionMap.has(ctx.route)) {
-      Wk.defPageOptionMap.set(ctx.route, this);
+    if (ctx.route && !Wk.defWkMap.has(ctx.route)) {
+      Wk.defWkMap.set(ctx.route, this);
     }
 
     injectSetDataHelper(ctx);
     injectGlobalMethod(ctx);
+
+    // if (ctx?.config?.isTab) {
+    //   Wk.tabPages.set(ctx.route, ctx);
+    // } else {
+    //   Wk.pageStack.add(ctx.route, ctx);
+    // }
   }
 
   unload() {
@@ -70,17 +80,19 @@ export class Wk {
     this.lifecycle.clear();
   }
 
-  static get(ctx: any): Wk {
+  static get(ctx: any): Wk | undefined {
     if (!ctx) {
-      return ctx;
+      return undefined;
     }
     if (!ctx[WK]) {
-      return ctx;
+      return undefined;
     }
     return ctx[WK]();
   }
 
-  static defPageOptionMap = new Map<string, any>();
+  static defWkMap = new Map<string, any>();
+  static pageStack: Set<any>[] = [];
+  static tabPages: Map<any, any> = new Map();
 }
 
 function injectGlobalMethod(ctx: any) {

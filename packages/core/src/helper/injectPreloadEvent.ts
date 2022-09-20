@@ -9,7 +9,7 @@ export function injectPreloadEvent(type: any) {
   injectHookBefore(wx, type, function(_, opts) {
     let [path, query] = opts.url.split("?");
     const route = path.substring(1);
-    const wk = Wk.defPageOptionMap.get(route);
+    const wk = Wk.defWkMap.get(route);
     if (wk) {
       const mod = wk.options;
       if (query) mod.options = queryParse(query);
@@ -29,13 +29,17 @@ export function injectPreloadEvent(type: any) {
 
 export function callPreload(ctx: any) {
   const wk = Wk.get(ctx);
+  if (!wk) {
+    Log.warn("onPreload", ctx.route, "not found WK");
+    return false;
+  }
   try {
     if (wk.lifecycle.get("onPreload")) {
       return false;
     }
     wk.lifecycle.set("onPreload", true);
     Log.info("onPreload", ctx.route);
-    ctx.onPreload && ctx.onPreload.call(null, ctx.options);
+    ctx.onPreload && ctx.onPreload.call(null, ctx.options, wk);
   } catch (error) {
     Log.error(ctx.route, "onPreload call", error);
   }
