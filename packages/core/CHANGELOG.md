@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 2.0.0
+
+### Major Changes
+
+- refactor: 简化框架的 onPreload 逻辑，onPreload 取消 this 访问
+
 ## 1.3.1
 
 ### Patch Changes
