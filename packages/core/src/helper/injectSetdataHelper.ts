@@ -5,7 +5,7 @@ import { Wk } from "../core/Wk";
 export function injectSetDataHelper(ctx: any) {
   // 暂时不适配defComponent
   const wekit = Wekit.globalWekit;
-  const wk = Wk.get(ctx);
+  const wk: Wk = Wk.get(ctx) as Wk;
   function _setData(this: any, data: AnyObject, cb: () => void) {
     wekit.pageEventEmitter.emit("setData", this, data);
     for (const key in data) {
