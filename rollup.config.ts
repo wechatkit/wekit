@@ -36,7 +36,7 @@ export default defineConfig({
         tsconfig: "tsconfig.json",
         sourceMaps: true,
         jsc: {
-          externalHelpers: true,
+          externalHelpers: false,
         },
       })
     ),
