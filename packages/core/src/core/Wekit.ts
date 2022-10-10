@@ -13,6 +13,7 @@ export class Wekit {
   readonly pageEventEmitter = new Emitter();
   readonly componentEventEmitter = new Emitter();
   private _require!: (path: string, cb: (mod: any) => any) => any;
+  public _isPageMethodInjected = false;
 
   public wxSupport = {
     requireCb: false,

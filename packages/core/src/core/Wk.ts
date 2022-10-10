@@ -14,6 +14,9 @@ export class Wk {
   rawSetData: any;
   updateCallbacks: any[] = [];
 
+  fragmentSetQueues = new Map<string, Set<Promise<undefined>>>();
+  prevValueMap = new Map<string, any>();
+
   ctx: any;
   options: any;
   loaded = false;
@@ -78,6 +81,8 @@ export class Wk {
     this.lock = false;
 
     this.lifecycle.clear();
+    this.fragmentSetQueues.forEach((set) => set?.clear());
+    this.fragmentSetQueues.clear();
   }
 
   static get(ctx: any): Wk | undefined {
@@ -96,12 +101,72 @@ export class Wk {
 }
 
 function injectGlobalMethod(ctx: any) {
-  const constructor = getConstructor(ctx);
   const wekit = Wekit.globalWekit;
+  if (wekit._isPageMethodInjected) {
+    return;
+  }
+  wekit._isPageMethodInjected = true;
+
+  const constructor = getConstructor(ctx);
 
   if (constructor) {
-    // constructor.prototype.$getInstance = function(this: any) {
-    //   return this;
-    // };
+    constructor.prototype.$push = async function $set(
+      this: any,
+      key: string,
+      value: any
+    ) {
+      const wk = Wk.get(this);
+      if (!wk) {
+        return;
+      }
+      if (Array.isArray(value)) {
+        const queue = wk.fragmentSetQueues.get(key) || new Set();
+        if (!wk.fragmentSetQueues.has(key)) {
+          wk.fragmentSetQueues.set(key, queue);
+        }
+
+        await Promise.all(queue);
+
+        let deno: AnyFunction = () => null;
+        const p = new Promise<undefined>((resolve) => {
+          deno = resolve;
+        });
+        queue.add(p);
+
+        if (this.data[key].length === 0) {
+          await this.setData({
+            [key]: value.length ? [value[0]] : [],
+          });
+          for (let i = 1; i < value.length; i++) {
+            if (wk.unloaded) {
+              deno();
+              queue.delete(p);
+              return;
+            }
+            await this.setData({ [`${key}[${i}]`]: value[i] });
+          }
+        } else {
+          const setObj: any = {};
+          const oldLen = this.data[key].length;
+          for (let i = 0; i < value.length; i += 2) {
+            for (let j = 0; j < 2; j++) {
+              if (!value[i + j]) {
+                break;
+              }
+              setObj[`${key}[${i + j + oldLen}]`] = value[i + j];
+            }
+          }
+          await this.setData(setObj);
+        }
+        deno();
+        queue.delete(p);
+      } else {
+        await this.setData({ [key]: value });
+      }
+    };
   }
+}
+
+function sleep(interval: number) {
+  return new Promise((resolve) => setTimeout(resolve, interval));
 }
