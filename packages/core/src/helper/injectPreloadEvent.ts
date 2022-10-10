@@ -8,6 +8,9 @@ import { Wk } from "./injectWk";
 export function injectPreloadEvent(type: any) {
   const wekit = Wekit.globalWekit;
   injectHookBefore(wx, type, function(_, opts) {
+    if (typeof opts.url !== "string") {
+      return;
+    }
     let [path, query] = opts.url.split("?");
     wekit.require(path, (ctx) => {
       if (ctx && ctx.__wk__) {
