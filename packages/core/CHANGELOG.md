@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.3.4
+
+### Patch Changes
+
+- chore: 编译发布
+
 ## 1.3.3
 
 ### Patch Changes
