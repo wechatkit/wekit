@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.3.3
+
+### Patch Changes
+
+- fix: 修复 Hook 触发时机
+
 ## 1.3.2
 
 ### Patch Changes
