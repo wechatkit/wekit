@@ -3,10 +3,10 @@ import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { injectSetDataHelper } from "./helper/injectSetdataHelper";
 import { injectWk, WkType } from "./helper/injectWk";
 
-export type DefPageOptions<TData extends AnyObject, TCustom extends AnyObject> = WechatMiniprogram.Page.Options<
-  TData,
-  TCustom
-> & {
+export type DefPageOptions<
+  TData extends AnyObject,
+  TCustom extends AnyObject
+> = WechatMiniprogram.Page.Options<TData, TCustom> & {
   data: (() => TData) | TData;
   onPreload?: (
     options: Record<string, string | undefined>
@@ -79,7 +79,7 @@ function multiBindPageHook(options: any, events: string[]) {
   const wekit = Wekit.globalWekit;
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    injectHookAfter(options, event, (...args) => {
+    injectHookBefore(options, event, (...args) => {
       wekit.pageEventEmitter.emit(event, ...args);
     });
   }
