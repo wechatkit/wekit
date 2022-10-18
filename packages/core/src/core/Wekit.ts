@@ -1,5 +1,5 @@
 import { PluginManager } from "../PluginManager";
-import { WekitOptions } from "../WekitOptions";
+import { WekitConfig, WekitOptions } from "../WekitOptions";
 import { calcRelativePath, Emitter, getCurrentPage, Log } from "@wekit/shared";
 import { defPage } from "../defPage";
 import { injectPreloadEvent } from "../helper/injectPreloadEvent";
@@ -8,18 +8,18 @@ import { version } from "../../package.json";
 import { Wk } from "./Wk";
 
 export class Wekit {
-  private pluginManager = new PluginManager(this);
   readonly appEventEmitter = new Emitter();
   readonly pageEventEmitter = new Emitter();
   readonly componentEventEmitter = new Emitter();
   private _require!: (path: string, cb: (mod: any) => any) => any;
+  public pluginManager = new PluginManager(this);
   public _isPageMethodInjected = false;
 
   public wxSupport = {
     requireCb: false,
   };
 
-  constructor(private options: WekitOptions) {
+  constructor(public options: WekitOptions) {
     this.pluginManager.installPlugins(options.plugins || []);
     this._require = options.config.require;
   }

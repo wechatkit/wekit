@@ -1,4 +1,5 @@
 import { Wekit } from "./core/Wekit";
+import { multiBindPageHook } from "./utils/multiBindPageHook";
 import { WekitOptions } from "./WekitOptions";
 
 export type CreateAppOptions<
@@ -8,9 +9,13 @@ export type CreateAppOptions<
 export function createApp<T extends AnyObject>(options: CreateAppOptions<T>) {
   const wekit = Wekit.create(options);
 
-  wekit.appEventEmitter.emit("onStartUp", options);
+  multiBindPageHook(
+    "appEventEmitter",
+    options,
+    wekit.pluginManager.getNeedAppHooks()
+  );
 
-  wekit.appEventEmitter.bindListener(options);
+  wekit.appEventEmitter.emit("onInitApp", options);
 
   App(options);
 

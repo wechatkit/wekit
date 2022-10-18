@@ -43,24 +43,13 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
     wk.unload();
   });
 
-  multiBindPageHook(options, [
-    "onPreload",
-    "onLoad",
-    "onReady",
-    "onShow",
-    "onHide",
-    "onPullDownRefresh",
-    "onReachBottom",
-    "onShareAppMessage",
-    "onShareTimeline",
-    "onAddToFavorites",
-    "onPageScroll",
-    "onResize",
-    "onTabItemTap",
-    "onSaveExitState",
-  ]);
+  multiBindPageHook(
+    "pageEventEmitter",
+    options,
+    wekit.pluginManager.getNeedPageHooks()
+  );
 
-  wekit.pageEventEmitter.emit("onInit", options);
+  wekit.pageEventEmitter.emit("onInitPage", options);
   Page(options);
   return options;
 }

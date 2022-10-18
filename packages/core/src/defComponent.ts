@@ -60,15 +60,13 @@ export function defComponent<
     wk.unload();
   });
 
-  multiBindPageHook(options.lifetimes, [
-    "created",
-    "attached",
-    "ready",
-    "moved",
-    "detached",
-  ]);
+  multiBindPageHook(
+    "componentEventEmitter",
+    options.lifetimes,
+    wekit.pluginManager.getNeedComponentHooks()
+  );
 
-  wekit.pageEventEmitter.emit("onInit", options);
+  wekit.componentEventEmitter.emit("onInitComponent", options);
   Component(options);
   return options;
 }
