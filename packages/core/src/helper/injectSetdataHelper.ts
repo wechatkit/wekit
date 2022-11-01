@@ -6,9 +6,27 @@ export function injectSetDataHelper(ctx: any) {
   // 暂时不适配defComponent
   const wekit = Wekit.globalWekit;
   const wk: Wk = Wk.get(ctx) as Wk;
-  function _setData(this: any, data: AnyObject, cb: () => void) {
-    return new Promise((resolve) => {
+  function _setData(
+    this: any,
+    data: AnyObject,
+    cb: () => void,
+    force: boolean = Boolean(wekit.options.config.forceFlushView)
+  ) {
+    return new Promise<void>((resolve) => {
       wekit.pageEventEmitter.emit("setData", this, data);
+      if (force) {
+        const updateTime = Date.now();
+        return wk.rawSetData(data, () => {
+          wekit.pageEventEmitter.emit(
+            "flushViewed",
+            wk.ctx,
+            data,
+            Date.now() - updateTime
+          );
+          resolve();
+          cb && cb();
+        });
+      }
       for (const key in data) {
         const value = data[key];
         setTargetValue(this.data, key, value);
