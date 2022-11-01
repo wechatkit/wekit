@@ -9,7 +9,7 @@ export function multiBindPageHook(
   const wekit = Wekit.globalWekit;
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
-    const beforeEvent = event + "Before";
+    const beforeEvent = event;
     const afterEvent = event + "After";
     injectHookBefore(
       options,
@@ -25,7 +25,6 @@ export function multiBindPageHook(
       options,
       event,
       (...args) => {
-        wekit[type].emit(event, ...args);
         wekit[type].emit(afterEvent, ...args);
       },
       (err) => {
