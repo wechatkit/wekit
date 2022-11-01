@@ -17,7 +17,9 @@ export function injectSetDataHelper(options: any) {
       setTargetValue(_data, key, value);
       wk.meta.updateData[key] = value;
     }
-    cb && cb();
+    if (typeof cb === "function") {
+      wk.meta.updateDataCbs.push(cb);
+    }
     triggerFlush(wk);
   }
   Object.defineProperty(options, "setData", {
@@ -38,7 +40,7 @@ function triggerFlush(wk: Wk) {
     return;
   }
   wk.meta.lock = true;
-  wx.nextTick(flushView);
+  tinyFn(flushView);
   function flushView() {
     const updateTime = Date.now();
     const wekit = Wekit.globalWekit;
@@ -52,7 +54,17 @@ function triggerFlush(wk: Wk) {
         updateData,
         Date.now() - updateTime
       );
+      const cbs = wk.meta.updateDataCbs;
+      wk.meta.updateDataCbs = [];
+      cbs.forEach((cb) => cb());
     });
     wk.meta.lock = false;
   }
+}
+
+function tinyFn(cb: () => void) {
+  if (Wekit.support.Promise) {
+    return Promise.resolve().then(cb);
+  }
+  return setTimeout(cb, 0);
 }

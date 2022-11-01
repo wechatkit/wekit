@@ -10,6 +10,7 @@ export enum WkType {
 
 export interface WkMeta {
   updateData: AnyObject;
+  updateDataCbs: Array<() => void>;
   rawSetData: ((data: AnyObject, cb?: () => void) => void) | null;
   dataFactory: () => AnyObject;
   data: AnyObject | null;
@@ -46,6 +47,7 @@ export function injectWk(options: AnyObject, type: WkType) {
   const wk: Wk = {
     meta: {
       updateData: {},
+      updateDataCbs: [],
       rawSetData: null,
       dataFactory,
       data: options.data,
