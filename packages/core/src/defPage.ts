@@ -46,7 +46,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   multiBindPageHook(
     "pageEventEmitter",
     options,
-    wekit.pluginManager.getNeedPageHooks()
+    wekit.pluginManager.getNeedHook("Page")
   );
 
   wekit.pageEventEmitter.emit("onInitPage", options);

@@ -63,7 +63,7 @@ export function defComponent<
   multiBindPageHook(
     "componentEventEmitter",
     options.lifetimes,
-    wekit.pluginManager.getNeedComponentHooks()
+    wekit.pluginManager.getNeedHook("Component")
   );
 
   wekit.componentEventEmitter.emit("onInitComponent", options);

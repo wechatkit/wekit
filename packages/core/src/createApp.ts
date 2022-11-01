@@ -12,7 +12,7 @@ export function createApp<T extends AnyObject>(options: CreateAppOptions<T>) {
   multiBindPageHook(
     "appEventEmitter",
     options,
-    wekit.pluginManager.getNeedAppHooks()
+    wekit.pluginManager.getNeedHook("App")
   );
 
   wekit.appEventEmitter.emit("onInitApp", options);
