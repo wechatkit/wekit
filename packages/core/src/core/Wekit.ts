@@ -12,14 +12,19 @@ export class Wekit {
   readonly componentEventEmitter = new Emitter();
   private _require!: (path: string, cb: (mod: any) => any) => any;
 
-  constructor(private options: WekitOptions) {
+  constructor(public options: WekitOptions) {
     this.pluginManager.installPlugins(options.plugins || []);
     this._require = options.config.require;
+    try {
+      Promise.resolve();
+    } catch (_) {
+      Wekit.support.Promise = false;
+    }
   }
 
   require(path: string, cb: (mod: any) => any) {
     const curPage = getCurrentPage();
-    if(curPage){
+    if (curPage) {
       path = calcRelativePath(curPage.is, path);
     }
     try {
@@ -33,6 +38,10 @@ export class Wekit {
   destroy() {
     this.pluginManager.destroy();
   }
+
+  static support = {
+    Promise: true,
+  };
 
   static globalWekit: Wekit;
 
