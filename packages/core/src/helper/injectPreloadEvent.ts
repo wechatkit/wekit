@@ -39,7 +39,7 @@ export function callPreload(ctx: any) {
     }
     wk.lifecycle.set("onPreload", true);
     Log.info("onPreload", ctx.route);
-    ctx.onPreload && ctx.onPreload.call(null, ctx.options, wk);
+    ctx.onPreload && ctx.onPreload.call(ctx, ctx.options, wk);
   } catch (error) {
     Log.error(ctx.route, "onPreload call", error);
   }
