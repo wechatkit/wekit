@@ -4,6 +4,15 @@
 
 ### Major Changes
 
+- fix: 极大的简化了 onPreload 的实现（onPreload 与 v1 不兼容）
+  fix: data 不能是函数方式了
+  perf: 更早的 onPreload 调用时机
+  feat: 更完善的插件机制
+
+## 2.0.0
+
+### Major Changes
+
 - refactor: 简化框架的 onPreload 逻辑，onPreload 取消 this 访问
 
 ## 1.3.1
