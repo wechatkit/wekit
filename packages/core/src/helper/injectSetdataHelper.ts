@@ -14,7 +14,7 @@ export function injectSetDataHelper(ctx: any) {
   ) {
     return new Promise<void>((resolve) => {
       wekit.pageEventEmitter.emit("setData", this, data);
-      if (force) {
+      if (force && wk.rawSetData) {
         const updateTime = Date.now();
         return wk.rawSetData(data, () => {
           wekit.pageEventEmitter.emit(
@@ -34,6 +34,7 @@ export function injectSetDataHelper(ctx: any) {
       }
       wk.updateCallbacks.push(resolve);
       if (cb && typeof cb === "function") wk.updateCallbacks.push(cb);
+      wk.isFlushView = true;
       triggerFlush(wk);
     });
   }
@@ -46,7 +47,10 @@ export function injectSetDataHelper(ctx: any) {
   return _setData;
 }
 
-function triggerFlush(wk: Wk) {
+export function triggerFlush(wk: Wk) {
+  if (wk.isFlushView === false) {
+    return;
+  }
   const rawSetData = wk.rawSetData;
   if (!rawSetData) {
     return;
@@ -55,7 +59,7 @@ function triggerFlush(wk: Wk) {
     return;
   }
   wk.lock = true;
-  wx.nextTick(flushView);
+  tinyFn(flushView);
   function flushView() {
     const updateTime = Date.now();
     const wekit = Wekit.globalWekit;
@@ -75,5 +79,10 @@ function triggerFlush(wk: Wk) {
       cbs.forEach((cb) => cb());
     });
     wk.lock = false;
+    wk.isFlushView = false;
   }
+}
+
+function tinyFn(cb: any) {
+  Wekit.wxSupport.promise ? Promise.resolve().then(cb) : setTimeout(cb, 0);
 }

@@ -4,6 +4,10 @@ import { Wk } from "./core/Wk";
 import { callPreload } from "./helper/injectPreloadEvent";
 import { defProp } from "./utils/defProp";
 import { multiBindPageHook } from "./utils/multiBindPageHook";
+import {
+  injectSetDataHelper,
+  triggerFlush,
+} from "./helper/injectSetdataHelper";
 
 export type DefPageOptions<
   TData extends AnyObject,
@@ -21,20 +25,26 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
 
   const wk = new Wk(options);
 
+  injectSetDataHelper(options);
+
   injectHookBefore(options, "onLoad", (ctx, opts) => {
+    wk.unload();
+    wk.load(ctx);
     wk.lifecycle.set("onUnload", false);
     wk.lifecycle.set("onLoad", true);
     callPreload(ctx);
-    wk.load(ctx);
+    triggerFlush(wk);
     wk.emitter.emit("onLoad", ctx);
   });
 
   injectHookBefore(options, "onReady", (ctx) => {
+    wk.load(ctx);
     wk.lifecycle.set("onReady", true);
     wk.emitter.emit("onReady", ctx);
   });
 
   injectHookBefore(options, "onShow", (ctx) => {
+    wk.load(ctx);
     wk.lifecycle.set("onShow", true);
   });
 

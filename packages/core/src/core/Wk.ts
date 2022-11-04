@@ -13,6 +13,7 @@ export class Wk {
   updateData: AnyObject = {};
   rawSetData: any;
   updateCallbacks: any[] = [];
+  isFlushView = false;
 
   fragmentSetQueues = new Map<string, Set<Promise<undefined>>>();
   prevValueMap = new Map<string, any>();
@@ -50,13 +51,12 @@ export class Wk {
     }
     this.loaded = true;
     this.ctx = ctx;
-    this.rawSetData = ctx.setData.bind(ctx);
+    this.rawSetData = getConstructor(ctx).prototype.setData.bind(ctx);
 
     if (ctx.route && !Wk.defWkMap.has(ctx.route)) {
       Wk.defWkMap.set(ctx.route, this);
     }
 
-    injectSetDataHelper(ctx);
     injectGlobalMethod(ctx);
 
     // if (ctx?.config?.isTab) {

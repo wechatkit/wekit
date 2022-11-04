@@ -15,13 +15,19 @@ export class Wekit {
   public pluginManager = new PluginManager(this);
   public _isPageMethodInjected = false;
 
-  public wxSupport = {
+  static wxSupport = {
     requireCb: false,
+    promise: false,
   };
 
   constructor(public options: WekitOptions) {
     this.pluginManager.installPlugins(options.plugins || []);
     this._require = options.config.require;
+    try {
+      Wekit.wxSupport.promise = typeof Promise !== "undefined";
+    } catch (_) {
+      Wekit.wxSupport.promise = false;
+    }
   }
 
   require(path: string, cb: (mod: any) => any) {

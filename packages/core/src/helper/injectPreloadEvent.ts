@@ -17,7 +17,7 @@ export function injectPreloadEvent(type: any) {
       return callPreload(mod);
     }
     wekit.require(path, (mod) => {
-      wekit.wxSupport.requireCb = true;
+      Wekit.wxSupport.requireCb = true;
       if (mod && Wk.get(mod)) {
         if (query) mod.options = queryParse(query);
         mod.route = route;
