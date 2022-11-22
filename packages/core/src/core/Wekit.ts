@@ -56,10 +56,10 @@ export class Wekit {
 
     Wekit.globalWekit = wekit;
 
-    injectPreloadEvent("switchTab");
-    injectPreloadEvent("reLaunch");
-    injectPreloadEvent("redirectTo");
-    injectPreloadEvent("navigateTo");
+    // injectPreloadEvent("switchTab");
+    // injectPreloadEvent("reLaunch");
+    // injectPreloadEvent("redirectTo");
+    // injectPreloadEvent("navigateTo");
 
     Object.defineProperty(wx, "defPage", {
       value: defPage,

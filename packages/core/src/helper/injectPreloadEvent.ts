@@ -17,6 +17,7 @@ export function injectPreloadEvent(type: any) {
       return callPreload(mod);
     }
     wekit.require(path, (mod) => {
+      // TODO: 有问题导致代码懒加载失效
       Wekit.wxSupport.requireCb = true;
       if (mod && Wk.get(mod)) {
         if (query) mod.options = queryParse(query);
