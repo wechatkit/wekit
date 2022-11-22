@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 1.3.5
+
+### Patch Changes
+
+- fix: 暂时去除 onPreload 实现
+
 ## 1.3.4
 
 ### Patch Changes

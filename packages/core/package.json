@@ -1,6 +1,6 @@
 {
   "name": "@wekit/core",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "wekit core lib",
   "main": "./dist/wekit-core.cjs.js",
   "module": "./dist/wekit-core.esm.js",
