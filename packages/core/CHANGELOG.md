@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- fix: 暂时去除 onPreload 实现
+- chore: 编译发布
 
 ## 1.3.3
 
