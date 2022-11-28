@@ -1,56 +1,49 @@
 import { Wekit } from "./core/Wekit";
 import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { Wk } from "./core/Wk";
-import { callPreload } from "./helper/injectPreloadEvent";
-import { defProp } from "./utils/defProp";
 import { multiBindPageHook } from "./utils/multiBindPageHook";
-import {
-  injectSetDataHelper,
-  triggerFlush,
-} from "./helper/injectSetdataHelper";
+import { wekitBehavior } from "./helper/wekitBehavior";
 
 export type DefPageOptions<
   TData extends AnyObject,
   TCustom extends AnyObject
 > = WechatMiniprogram.Page.Options<TData, TCustom> & {
+  behaviors: any[];
   onPreload?: (
     options: Record<string, string | undefined>
   ) => void | Promise<void>;
 };
+
+export type Noop = () => void;
 
 export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   options: DefPageOptions<TData, TCustom>
 ) {
   const wekit = Wekit.globalWekit;
 
-  const wk = new Wk(options);
+  const wk = new Wk(options, "Page");
 
-  injectSetDataHelper(options);
+  options.behaviors = options.behaviors || [];
+  options.behaviors.push(wekitBehavior);
 
   injectHookBefore(options, "onLoad", (ctx, opts) => {
-    wk.unload();
-    wk.load(ctx);
     wk.lifecycle.set("onUnload", false);
     wk.lifecycle.set("onLoad", true);
-    callPreload(ctx);
-    triggerFlush(wk);
     wk.emitter.emit("onLoad", ctx);
   });
 
   injectHookBefore(options, "onReady", (ctx) => {
-    wk.load(ctx);
     wk.lifecycle.set("onReady", true);
     wk.emitter.emit("onReady", ctx);
   });
 
   injectHookBefore(options, "onShow", (ctx) => {
-    wk.load(ctx);
     wk.lifecycle.set("onShow", true);
   });
 
   injectHookAfter(options, "onUnload", (ctx: any) => {
     wk.lifecycle.set("onUnload", true);
-    wk.unload();
+    wk.emitter.emit("onUnload", ctx);
   });
 
   multiBindPageHook(
@@ -60,6 +53,6 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   );
 
   wekit.pageEventEmitter.emit("onInitPage", options);
-  Page(options);
+  Wekit.Page(options);
   return options;
 }

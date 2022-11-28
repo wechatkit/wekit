@@ -10,28 +10,29 @@ export function injectPreloadEvent(type: any) {
     let [path, query] = opts.url.split("?");
     const route = path.substring(1);
     const wk = Wk.defWkMap.get(route);
+
     if (wk) {
       const mod = wk.options;
       if (query) mod.options = queryParse(query);
-      mod.route = route;
+
       return callPreload(mod);
     }
-    wekit.require(path, (mod) => {
-      // TODO: 有问题导致代码懒加载失效
-      Wekit.wxSupport.requireCb = true;
-      if (mod && Wk.get(mod)) {
-        if (query) mod.options = queryParse(query);
-        mod.route = route;
-        callPreload(mod);
-      }
-    });
+    // wekit.require(path, (mod) => {
+    //   // TODO: 有问题导致代码懒加载失效
+    //   Wekit.wxSupport.requireCb = true;
+    //   if (mod && Wk.get(mod)) {
+    //     if (query) mod.options = queryParse(query);
+    //     mod.route = route;
+    //     callPreload(mod);
+    //   }
+    // });
   });
 }
 
 export function callPreload(ctx: any) {
   const wk = Wk.get(ctx);
   if (!wk) {
-    Log.warn("onPreload", ctx.route, "not found WK");
+    Log.warn("onPreload", ctx.is, "not found WK");
     return false;
   }
   try {
@@ -39,10 +40,10 @@ export function callPreload(ctx: any) {
       return false;
     }
     wk.lifecycle.set("onPreload", true);
-    Log.info("onPreload", ctx.route);
+    Log.info("onPreload", ctx.is);
     ctx.onPreload && ctx.onPreload.call(ctx, ctx.options, wk);
   } catch (error) {
-    Log.error(ctx.route, "onPreload call", error);
+    Log.error(ctx.is, "onPreload call", error);
   }
   return true;
 }

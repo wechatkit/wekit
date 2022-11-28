@@ -36,7 +36,7 @@ export function defComponent<
 
   options.lifetimes = options.lifetimes || {};
 
-  const wk = new Wk(options);
+  const wk = new Wk(options, "Component");
 
   injectHookBefore(options.lifetimes, "created", (ctx, opts) => {
     wk.lifecycle.set("created", true);
@@ -67,6 +67,6 @@ export function defComponent<
   );
 
   wekit.componentEventEmitter.emit("onInitComponent", options);
-  Component(options);
+  Wekit.Component(options);
   return options;
 }

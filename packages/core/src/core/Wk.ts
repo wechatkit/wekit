@@ -1,5 +1,4 @@
 import { callPreload } from "../helper/injectPreloadEvent";
-import { injectSetDataHelper } from "../helper/injectSetdataHelper";
 import { Wekit } from "./Wekit";
 import { getConstructor } from "../utils/getConstructor";
 import { Emitter } from "@wekit/shared";
@@ -9,24 +8,13 @@ export const WK = "__wk__";
 export class Wk {
   lifecycle = new Map<string, boolean>();
 
-  lock: boolean = false;
-  updateData: AnyObject = {};
-  rawSetData: any;
-  updateCallbacks: any[] = [];
-  isFlushView = false;
-
-  fragmentSetQueues = new Map<string, Set<Promise<undefined>>>();
-  prevValueMap = new Map<string, any>();
-
   ctx: any;
-  options: any;
   loaded = false;
   unloaded = false;
   emitter = new Emitter();
 
-  constructor(options: any) {
+  constructor(public options: any, public type: "Page" | "Component") {
     options[WK] = () => this;
-    this.options = options;
   }
 
   wait(event: string) {
@@ -51,38 +39,28 @@ export class Wk {
     }
     this.loaded = true;
     this.ctx = ctx;
-    this.rawSetData = getConstructor(ctx).prototype.setData.bind(ctx);
+    this.options.is = ctx.is;
 
-    if (ctx.route && !Wk.defWkMap.has(ctx.route)) {
-      Wk.defWkMap.set(ctx.route, this);
+    if (this.type === "Page") callPreload(this.options);
+
+    if (this.ctx.is && !Wk.defWkMap.has(this.ctx.is)) {
+      Wk.defWkMap.set(this.ctx.is, this);
     }
 
     injectGlobalMethod(ctx);
-
-    // if (ctx?.config?.isTab) {
-    //   Wk.tabPages.set(ctx.route, ctx);
-    // } else {
-    //   Wk.pageStack.add(ctx.route, ctx);
-    // }
   }
 
   unload() {
     if (this.unloaded) {
       return;
     }
+
     this.unloaded = true;
 
     this.ctx = null;
     this.loaded = false;
 
-    this.updateCallbacks = [];
-    this.updateData = {};
-    this.rawSetData = null;
-    this.lock = false;
-
     this.lifecycle.clear();
-    this.fragmentSetQueues.forEach((set) => set?.clear());
-    this.fragmentSetQueues.clear();
   }
 
   static get(ctx: any): Wk | undefined {
@@ -96,8 +74,6 @@ export class Wk {
   }
 
   static defWkMap = new Map<string, any>();
-  static pageStack: Set<any>[] = [];
-  static tabPages: Map<any, any> = new Map();
 }
 
 function injectGlobalMethod(ctx: any) {
@@ -110,63 +86,11 @@ function injectGlobalMethod(ctx: any) {
   const constructor = getConstructor(ctx);
 
   if (constructor) {
-    constructor.prototype.$push = async function $set(
-      this: any,
-      key: string,
-      value: any
-    ) {
-      const wk = Wk.get(this);
-      if (!wk) {
-        return;
-      }
-      if (Array.isArray(value)) {
-        const queue = wk.fragmentSetQueues.get(key) || new Set();
-        if (!wk.fragmentSetQueues.has(key)) {
-          wk.fragmentSetQueues.set(key, queue);
-        }
-
-        await Promise.all(queue);
-
-        let deno: AnyFunction = () => null;
-        const p = new Promise<undefined>((resolve) => {
-          deno = resolve;
-        });
-        queue.add(p);
-
-        if (this.data[key].length === 0) {
-          await this.setData({
-            [key]: value.length ? [value[0]] : [],
-          });
-          for (let i = 1; i < value.length; i++) {
-            if (wk.unloaded) {
-              deno();
-              queue.delete(p);
-              return;
-            }
-            await this.setData({ [`${key}[${i}]`]: value[i] });
-          }
-        } else {
-          const setObj: any = {};
-          const oldLen = this.data[key].length;
-          for (let i = 0; i < value.length; i += 2) {
-            for (let j = 0; j < 2; j++) {
-              if (!value[i + j]) {
-                break;
-              }
-              setObj[`${key}[${i + j + oldLen}]`] = value[i + j];
-            }
-          }
-          await this.setData(setObj);
-        }
-        deno();
-        queue.delete(p);
-      } else {
-        await this.setData({ [key]: value });
-      }
+    constructor.prototype.$push = function $push(this: any) {
+      console.log(this);
+    };
+    constructor.prototype.$getWk = function $getWk(this) {
+      return Wk.get(this);
     };
   }
-}
-
-function sleep(interval: number) {
-  return new Promise((resolve) => setTimeout(resolve, interval));
 }
