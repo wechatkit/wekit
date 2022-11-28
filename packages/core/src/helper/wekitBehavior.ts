@@ -26,7 +26,7 @@ export const wekitBehavior = Behavior({
     detached() {
       const wk = Wk.get(this);
       if (wk) {
-        wk.unload();
+        setTimeout(() => wk.unload());
       }
     },
   },

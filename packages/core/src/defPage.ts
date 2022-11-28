@@ -24,7 +24,7 @@ export function defPage<TData extends AnyObject, TCustom extends AnyObject>(
   const wk = new Wk(options, "Page");
 
   options.behaviors = options.behaviors || [];
-  options.behaviors.push(wekitBehavior);
+  options.behaviors.unshift(wekitBehavior);
 
   injectHookBefore(options, "onLoad", (ctx, opts) => {
     wk.lifecycle.set("onUnload", false);
