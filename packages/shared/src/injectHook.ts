@@ -26,6 +26,13 @@ export function injectHookBefore<T>(
     try {
       methodCb(this, ...args);
     } catch (error) {
+      if(error instanceof AboutCall) {
+        if(error.type === AboutType.RETURN){
+          return error.returnValue;
+        }else{
+          throw error;
+        }
+      }
       console.error(error);
     }
 
@@ -107,4 +114,15 @@ export function injectHookAfter<T>(
     writable: desc.writable,
     configurable: desc.configurable,
   });
+}
+
+export enum AboutType {
+  RETURN, // return
+  THROW, // throw
+}
+
+export class AboutCall extends Error {
+  constructor(public type:AboutType = AboutType.THROW, public returnValue?: any){
+    super("Wekit about call");  
+  }
 }
