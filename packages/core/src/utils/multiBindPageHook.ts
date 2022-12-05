@@ -2,7 +2,11 @@ import { injectHookAfter, injectHookBefore } from "@wekit/shared";
 import { Wekit } from "../core/Wekit";
 
 export function multiBindPageHook(
-  type: "pageEventEmitter" | "appEventEmitter" | "componentEventEmitter",
+  type:
+    | "pageEventEmitter"
+    | "appEventEmitter"
+    | "componentEventEmitter"
+    | "behaviorEventEmitter",
   options: any,
   events: string[]
 ) {

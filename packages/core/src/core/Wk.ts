@@ -2,6 +2,7 @@ import { callPreload } from "../helper/injectPreloadEvent";
 import { Wekit } from "./Wekit";
 import { getConstructor } from "../utils/getConstructor";
 import { Emitter } from "@wekit/shared";
+import { NeedType } from "../PluginManager";
 
 export const WK = "__wk__";
 
@@ -13,7 +14,7 @@ export class Wk {
   unloaded = false;
   emitter = new Emitter();
 
-  constructor(public options: any, public type: "Page" | "Component") {
+  constructor(public options: any, public type: NeedType) {
     options[WK] = () => this;
   }
 

@@ -11,6 +11,7 @@ export class Wekit {
   readonly appEventEmitter = new Emitter();
   readonly pageEventEmitter = new Emitter();
   readonly componentEventEmitter = new Emitter();
+  readonly behaviorEventEmitter = new Emitter();
   private _require!: (path: string, cb: (mod: any) => any) => any;
   public pluginManager = new PluginManager(this);
   public _isPageMethodInjected = false;
@@ -84,6 +85,7 @@ export class Wekit {
   static Wk = Wk;
   static Page = Page;
   static Component = Component;
+  static Behavior = Behavior;
   static wxSupport = {
     requireCb: false,
     promise: false,

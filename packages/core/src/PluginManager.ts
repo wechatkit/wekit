@@ -1,7 +1,7 @@
 import { Wekit } from "./core/Wekit";
 import { Plugin } from "./Plugin";
 
-export type NeedType = "App" | "Page" | "Component";
+export type NeedType = "App" | "Page" | "Component" | "Behavior";
 
 export class PluginManager {
   private pluginStore = new Set<Plugin>();
