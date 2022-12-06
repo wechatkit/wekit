@@ -1,5 +1,17 @@
 # @wekit/core
 
+## 2.1.0
+
+### Minor Changes
+
+- - feat(shared): 支持拦截方法内中断调用
+  - feat(core): 简化优化核心库实现
+
+### Patch Changes
+
+- Updated dependencies
+  - @wekit/shared@2.0.0
+
 ## 2.0.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # play
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @wekit/shared@2.0.0
+  - @wekit/core@2.1.0
+  - @wekit/plugin-console@1.1.4
+
 ## 0.1.3
 
 ### Patch Changes
