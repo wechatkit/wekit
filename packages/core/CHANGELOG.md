@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 2.1.1
+
+### Patch Changes
+
+- fix(core): 修正代码里的版本号
+
 ## 2.1.0
 
 ### Minor Changes
