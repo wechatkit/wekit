@@ -1,5 +1,11 @@
 # @wekit/core
 
+## 2.1.3
+
+### Patch Changes
+
+- - fix(core): 更完善的兼容就的生命周
+
 ## 2.1.2
 
 ### Patch Changes
