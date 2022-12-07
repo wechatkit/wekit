@@ -36,26 +36,39 @@ export function defBehavior<
 
   options.lifetimes = options.lifetimes || {};
 
+  const created = options.created;
+  options.created = undefined;
+  const attached = options.attached;
+  options.attached = undefined;
+  const ready = options.ready;
+  options.ready = undefined;
+  const detached = options.detached;
+  options.detached = undefined;
+
   const wk = new Wk(options, "Behavior");
 
-  injectHookBefore(options.lifetimes, "created", (ctx, opts) => {
+  injectHookBefore(options.lifetimes, "created", (ctx) => {
     wk.lifecycle.set("created", true);
     wk.load(ctx);
-    options.created?.call(ctx)
+    created?.call(ctx);
   });
 
   injectHookBefore(options.lifetimes, "attached", (ctx) => {
     wk.lifecycle.set("detached", false);
     wk.lifecycle.set("attached", true);
-    options.attached?.call(ctx)
+    attached?.call(ctx);
   });
   injectHookBefore(options.lifetimes, "ready", (ctx) => {
     wk.lifecycle.set("ready", true);
-    options.ready?.call(ctx)
+    ready?.call(ctx);
   });
 
   injectHookAfter(options.lifetimes, "detached", (ctx: any) => {
-    try { options.detached?.call(ctx) } catch (error) { console.error(error) }
+    try {
+      detached?.call(ctx);
+    } catch (error) {
+      console.error(error);
+    }
     wk.lifecycle.set("detached", true);
     wk.unload();
   });
