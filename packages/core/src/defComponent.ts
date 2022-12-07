@@ -41,21 +41,21 @@ export function defComponent<
   injectHookBefore(options.lifetimes, "created", (ctx, opts) => {
     wk.lifecycle.set("created", true);
     wk.load(ctx);
+    options.created?.call(ctx);
   });
-
+  
   injectHookBefore(options.lifetimes, "attached", (ctx) => {
     wk.lifecycle.set("detached", false);
     wk.lifecycle.set("attached", true);
+    options.attached?.call(ctx);
   });
   injectHookBefore(options.lifetimes, "ready", (ctx) => {
     wk.lifecycle.set("ready", true);
+    options.ready?.call(ctx);
   });
-
-  injectHookBefore(options.lifetimes, "moved", (ctx) => {
-    wk.lifecycle.set("moved", true);
-  });
-
+  
   injectHookAfter(options.lifetimes, "detached", (ctx: any) => {
+    try { options.detached?.call(ctx) } catch (error) { console.error(error) }
     wk.lifecycle.set("detached", true);
     wk.unload();
   });
