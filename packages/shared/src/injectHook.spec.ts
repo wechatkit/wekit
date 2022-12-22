@@ -123,4 +123,42 @@ describe("injectHook.ts", () => {
     expect(mockFN).toBeCalledWith(obj);
     expect(errFN).toBeCalledTimes(1);
   });
+
+  it("should recovery before function", () => {
+    const mockFN = jest.fn(() => {});
+    const obj: any = {
+      hello2() {
+      },
+    };
+    const hello2 = obj.hello2;
+    const recovery = injectHookBefore(obj, "hello2", mockFN);
+    obj.hello2();
+    expect(mockFN).toBeCalledTimes(1);
+    expect(mockFN).toBeCalledWith(obj);
+    expect(obj.hello2).not.toBe(hello2);
+    recovery();
+    obj.hello2();
+    expect(mockFN).toBeCalledTimes(1);
+    expect(mockFN).toBeCalledWith(obj);
+    expect(obj.hello2).toBe(hello2);
+  });
+  
+  it("should recovery after function", () => {
+    const mockFN = jest.fn(() => {});
+    const obj: any = {
+      hello2() {
+      },
+    };
+    const hello2 = obj.hello2;
+    const recovery = injectHookAfter(obj, "hello2", mockFN);
+    obj.hello2();
+    expect(mockFN).toBeCalledTimes(1);
+    expect(mockFN).toBeCalledWith(obj);
+    expect(obj.hello2).not.toBe(hello2);
+    recovery();
+    obj.hello2();
+    expect(mockFN).toBeCalledTimes(1);
+    expect(mockFN).toBeCalledWith(obj);
+    expect(obj.hello2).toBe(hello2);
+  });
 });

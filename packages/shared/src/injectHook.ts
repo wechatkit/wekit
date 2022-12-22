@@ -63,6 +63,15 @@ export function injectHookBefore<T>(
     writable: desc.writable,
     configurable: desc.configurable,
   });
+
+  return ()=>{
+    Object.defineProperty(instance, name, {
+      value: _method,
+      enumerable: desc.enumerable,
+      writable: desc.writable,
+      configurable: desc.configurable,
+    });
+  }
 }
 
 export function injectHookAfter<T>(
@@ -114,6 +123,15 @@ export function injectHookAfter<T>(
     writable: desc.writable,
     configurable: desc.configurable,
   });
+
+  return ()=>{
+    Object.defineProperty(instance, name, {
+      value: _method,
+      enumerable: desc.enumerable,
+      writable: desc.writable,
+      configurable: desc.configurable,
+    });
+  }
 }
 
 export enum AboutType {
