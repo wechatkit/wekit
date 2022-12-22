@@ -1,5 +1,12 @@
 # @wekit/shared
 
+## 2.1.0
+
+### Minor Changes
+
+- fix(core): 修复注入混入依赖
+  feat(shared): 支持卸载拦截
+
 ## 2.0.0
 
 ### Major Changes

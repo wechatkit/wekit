@@ -1,5 +1,14 @@
 # @wekit/core
 
+## 2.1.4
+
+### Patch Changes
+
+- fix(core): 修复注入混入依赖
+  feat(shared): 支持卸载拦截
+- Updated dependencies
+  - @wekit/shared@2.1.0
+
 ## 2.1.3
 
 ### Patch Changes
