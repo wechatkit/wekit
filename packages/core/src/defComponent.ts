@@ -1,6 +1,7 @@
 import { injectHookBefore, injectHookAfter } from "@wekit/shared";
 import { Wekit } from "./core/Wekit";
 import { Wk } from "./core/Wk";
+import { wekitBehavior } from "./helper/wekitBehavior";
 import { multiBindPageHook } from "./utils/multiBindPageHook";
 
 export type DefComponentOptions<
@@ -33,6 +34,9 @@ export function defComponent<
   >
 ) {
   const wekit = Wekit.globalWekit;
+
+  options.behaviors = options.behaviors || [];
+  options.behaviors.unshift(wekitBehavior);
 
   options.lifetimes = options.lifetimes || {};
 
